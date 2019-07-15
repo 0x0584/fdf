@@ -6,7 +6,7 @@
 /*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 23:17:05 by archid-           #+#    #+#             */
-/*   Updated: 2019/07/16 00:38:05 by archid-          ###   ########.fr       */
+/*   Updated: 2019/07/16 00:47:27 by archid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,18 +66,27 @@ t_plist		file_to_lst(const int fd)
 t_pnt_array	*point_read_fdf(const int fd)
 {
 	t_plist lines;
+	t_plist walk;
 	t_pnt_array *fdf;
-	t_uint32 dims[2];
+	t_uint32 i;
 
 	UNLESS_RET(fd >= 0, NULL);
 	UNLESS_RET(fdf = ALLOC(t_pnt_array *, 1, sizeof(t_pnt_array)), NULL);
-	ft_bzero(dims, 2 * sizeof(t_uint32));
 
 	lines = file_to_lst(fd);
 
-	dims[0] = ft_strlen(lines->content);
-	dims[1] = ft_lstlen(lines);
+	fdf->width = ft_strlen(lines->content);
+	fdf->length = ft_lstlen(lines);
 
+	i = 0;
+	fdf->base = ALLOC(t_pnt **, fdf->length, sizeof(t_pnt *));
+	walk = lines;
+	while (walk)
+	{
+		fdf->base[i] = get_coords_in_line(walk->content, i);
+		walk = walk->next;
+		i++;
+	}
 	return (fdf);
 }
 
