@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*																			  */
-/*														  :::	   ::::::::	  */
-/*	 libft.h											:+:		 :+:	:+:	  */
-/*													  +:+ +:+		  +:+	  */
-/*	 By: archid- <archid-@student.1337.ma>			+#+	 +:+	   +#+		  */
-/*												  +#+#+#+#+#+	+#+			  */
-/*	 Created: 2019/03/30 17:32:57 by archid-		   #+#	  #+#			  */
-/*	 Updated: 2019/07/02 01:48:11 by archid-		  ###	########.fr		  */
-/*																			  */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libft.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/30 17:32:57 by archid-           #+#    #+#             */
+/*   Updated: 2019/07/15 22:24:50 by archid-          ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 /* FIXME: split this fucking libft into multiple parts */
@@ -21,6 +21,7 @@
 # include <stdarg.h>
 # include <stdbool.h>
 # include <unistd.h>
+# include <fcntl.h>
 
 # define ABS(x)								((x) < 0 ? (x) * -1 : (x))
 # define MAX(a, b)							((a) > (b) ? (a) : (b))
