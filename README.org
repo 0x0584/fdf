@@ -1,5 +1,26 @@
-* FDF [0/3]
+* TODO FDF [1/4]
+- State "IN-PROGRESS" from "TODO"       [2019-07-16 Tue 23:22]
 
- + [ ] read map and parse all coordinates
- + [ ] create a window
- + [ ] plot all the points
+SCHEDULED: <2019-07-15 Mon 21:54>
+DEADLINE: <2019-07-23 Tue 00:00>
+
++ [X] [[get input from file]]
++ [ ] [[line drawing algorithm!]]
++ [ ] [[plot all the points]]
++ [ ] [[color interfaces]]
+
+** DONE get input from file
+
+- State "DONE"       from "TODO"       [2019-07-16 Tue 23:22]
+
+Read all coords from a file name =file.fdf=. the number of coords is to be determined. The idea is simple, read lines of =file.fdf=, split each one using =ft_strsplit()= (named =split=)and apply =atoi()= to each value of =split= and store those values in an array of =t_pnt=.
+
+** IN-PROGRESS line drawing algorithm! [0/3]
+SCHEDULED: <2019-07-16 Tue 11:21>
+
+- State "IN-PROGRESS" from "TODO"       [2019-07-16 Tue 23:22]
++ [ ] What? ::
++ [ ] How? ::
++ [ ] C implem! ::
+
+** TODO plot all the points
