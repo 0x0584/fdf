@@ -6,7 +6,7 @@
 /*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 23:17:05 by archid-           #+#    #+#             */
-/*   Updated: 2019/07/16 18:29:35 by archid-          ###   ########.fr       */
+/*   Updated: 2019/07/16 21:44:55 by archid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,9 @@ t_pnt		*get_coords_in_line(char *line, t_uint32 y)
 		ft_strdel(walk++);
 	ft_strdel(splited);
 	return (cord);
+}
+
+void		point_plot(void *mlx_id, void *win_id, t_pnt point)
+{
+	mlx_pixel_put(mlx_id, win_id, point.x, point.y, 200);
 }
