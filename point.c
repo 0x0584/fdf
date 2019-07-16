@@ -151,3 +151,23 @@ void		plot_all_point(t_pnt_array *pnts)
 	/* mlx_clear_window(mlx_id, win_id); */
 	/* mlx_destroy_window(mlx_id, win_id); */
 }
+
+t_pnt		*get_coords_in_line(char *line, t_uint32 y)
+{
+	char *splited;
+	t_pnt *cord;
+	int i;
+
+	i = 0;
+	splited = ft_strsplit(line, ' '); // to be free'd
+	cord = ALLOC(t_pnt *, ft_strlen(splited), sizeof(t_pnt ));
+	while (*splited)
+	{
+		cord[i].x = i;
+		cord[i].y = y;
+		cord[i].z = ft_atoi(splited);
+		i++;
+		splited++; // has leaks
+	}
+	return (cord);
+}
