@@ -6,11 +6,11 @@
 /*   By: archid- <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 18:01:11 by archid-           #+#    #+#             */
-/*   Updated: 2019/07/16 00:19:20 by archid-          ###   ########.fr       */
+/*   Updated: 2019/07/16 01:31:00 by archid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "gnl.h"
 
 t_state		extract_nl_line(char **cache, char **line)
 {

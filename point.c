@@ -6,12 +6,13 @@
 /*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 23:17:05 by archid-           #+#    #+#             */
-/*   Updated: 2019/07/16 00:47:27 by archid-          ###   ########.fr       */
+/*   Updated: 2019/07/16 01:41:07 by archid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "point.h"
 #include "gnl.h"
+#include <mlx.h>
 
 #include <stdio.h>
 
@@ -83,7 +84,7 @@ t_pnt_array	*point_read_fdf(const int fd)
 	walk = lines;
 	while (walk)
 	{
-		fdf->base[i] = get_coords_in_line(walk->content, i);
+		/* fdf->base[i] = get_coords_in_line(walk->content, i); */
 		walk = walk->next;
 		i++;
 	}
@@ -109,4 +110,44 @@ void		point_dbg(t_pnt_array pnts)
 		}
 		i++;
 	}
+}
+
+#define OFFSET 200
+
+void		plot_all_point(t_pnt_array *pnts)
+{
+	void *mlx_id;
+	void *win_id;
+
+	t_uint32 i;
+	t_uint32 j;
+
+	/* mlx_id = mlx_init(); */
+	/* win_id = mlx_new_window(mlx_id, */
+	/* 						pnts->width * OFFSET, */
+	/* 						pnts->length * OFFSET, */
+	/* 						"FDF"); */
+	i = 0;
+	while (i < pnts->length)
+	{
+		j = 0;
+		while (j < pnts->width)
+		{
+			printf("%ld, %ld, %ld\n",
+				   pnts->base[i][j].x,
+				   pnts->base[i][j].y,
+				   pnts->base[i][j].z);
+
+			/*
+			mlx_pixel_put(mlx_id, win_id,
+						  pnts->base[i][j].x, pnts->base[i][j].y,
+						  120);
+			*/
+			j++;
+		}
+		i++;
+	}
+	/* mlx_loop(mlx_id); */
+	/* mlx_clear_window(mlx_id, win_id); */
+	/* mlx_destroy_window(mlx_id, win_id); */
 }

@@ -1,3 +1,5 @@
-* FDF [0/1]
+* FDF [0/3]
 
  + [ ] read map and parse all coordinates
+ + [ ] create a window
+ + [ ] plot all the points

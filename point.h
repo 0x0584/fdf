@@ -6,7 +6,7 @@
 /*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 22:11:53 by archid-           #+#    #+#             */
-/*   Updated: 2019/07/16 00:46:23 by archid-          ###   ########.fr       */
+/*   Updated: 2019/07/16 01:13:58 by archid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ t_pnt_array *point_read_fdf(const int fd);
 void		point_dbg(t_pnt_array pnts);
 
 t_pnt		*get_coords_in_line(char *line, t_uint32 y);
+void		plot_all_point(t_pnt_array *pnts);
 
 #endif
