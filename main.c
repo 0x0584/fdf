@@ -10,9 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "point.h"
 #include <mlx.h>
 #include <stdio.h>
+
+#include "fdf.h"
+
 #define OFFSET 200
 
 void	do_mlx_test(void)
@@ -80,9 +82,10 @@ void	do_mlx_test(void)
 
 }
 
+/*
 void	do_read_fdf_test(int argc, char**argv)
 {
-	t_pnt_array *fdf;
+	t_fdf_data *fdf;
 	int fd;
 
 	if (argc != 2 || !((fd = open(argv[1], O_RDONLY)) >= 0))
@@ -90,6 +93,7 @@ void	do_read_fdf_test(int argc, char**argv)
 	fdf = point_read_fdf(fd);
 	point_dbg(*fdf);
 }
+*/
 
 void	do_get_coords_test(void)
 {

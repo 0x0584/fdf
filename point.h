@@ -22,18 +22,9 @@ typedef struct	s_3d_point
 	t_int64 z;
 }				t_pnt;
 
-typedef struct	s_point_array
-{
-	t_pnt **base;
-	t_uint32 length;
-	t_uint32 width;
-}				t_pnt_array;
-
 t_pnt		point_init(t_int64 x, t_int64 y, t_int64 z);
-t_pnt_array *point_read_fdf(const int fd);
-void		point_dbg(t_pnt_array pnts);
-
 t_pnt		*get_coords_in_line(char *line, t_uint32 y);
-void		plot_all_point(t_pnt_array *pnts);
+
+// void		point_dbg(t_pnt_array pnts);
 
 #endif
