@@ -1,19 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/07/16 18:36:12 by archid-           #+#    #+#             */
+/*   Updated: 2019/07/16 18:41:22 by archid-          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "point.h"
 #include <mlx.h>
-
+#include <stdio.h>
 #define OFFSET 200
 
-int main(int argc, char *argv[])
+void	do_mlx_test(void)
 {
-	/* t_pnt_array fdf; */
-	/* int fd; */
-
-	/* UNLESS_RET(argc == 2, -1); */
-	/* UNLESS_RET((fd = open(argv[1], O_RDONLY)) >= 0, -1); */
-
-	/* fdf = point_read_fdf(fd); */
-	/* point_dbg(fdf); */
-
 	const t_uint32 length = 3, width = 4;
 	t_pnt points[length][width] = {
 		{
@@ -64,7 +67,7 @@ int main(int argc, char *argv[])
 			int foo = 100;
 			while (foo--)
 				mlx_pixel_put(mlx_id, win_id,
-							 origin.x + points[i][j].x + foo, origin.y + points[i][j].y + foo,
+							  origin.x + points[i][j].x + foo, origin.y + points[i][j].y + foo,
 							  255);
 			j++;
 		}
@@ -74,6 +77,51 @@ int main(int argc, char *argv[])
 	mlx_loop(mlx_id);
 	mlx_clear_window(mlx_id, win_id);
 	mlx_destroy_window(mlx_id, win_id);
+
+}
+
+void	do_read_fdf_test(int argc, char**argv)
+{
+	t_pnt_array *fdf;
+	int fd;
+
+	if (argc != 2 || !((fd = open(argv[1], O_RDONLY)) >= 0))
+		return ;
+	fdf = point_read_fdf(fd);
+	point_dbg(*fdf);
+}
+
+void	do_get_coords_test(void)
+{
+	char *str = "10 20 10 -2";
+	const int width = ft_wordcount(str, ' '), n_tests = 5;
+	t_uint16 i = 0, j = 0;
+	t_pnt *pnts = NULL;
+
+	while (i < n_tests)
+	{
+		j = 0;
+		pnts = get_coords_in_line(str, i++);
+		while (j < width)
+		{
+			/* the cast is because printf returns an int, we don't want that! */
+			(void)printf("(x:%ld, y:%ld, z:%ld) ",
+						 pnts[j].x, pnts[j].y, pnts[j].z);
+			j++;
+		}
+		(void)printf("\n");
+		j = 0;
+		free(pnts);
+	}
+
+}
+
+int main(int argc, char *argv[])
+{
+	/* do_read_fdf_test(); */
+	/* do_mlx_test(); */
+
+	do_get_coords_test();
 
 	return (0);
 }
