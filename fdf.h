@@ -1,5 +1,5 @@
-/*  
-    fdf.h 
+/*
+    fdf.h
     created: july 16, 06:47
 */
 
@@ -11,7 +11,7 @@
 
 typedef struct	s_fdf_data
 {
-	t_pnt           **base;
+	t_pnt3d           **base;
 	t_uint32        length;
 	t_uint32        width;
 }				t_fdf_data;

@@ -6,7 +6,7 @@
 /*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 18:36:12 by archid-           #+#    #+#             */
-/*   Updated: 2019/07/16 21:59:20 by archid-          ###   ########.fr       */
+/*   Updated: 2019/07/17 01:54:40 by archid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,95 +14,66 @@
 #include <stdio.h>
 
 #include "fdf.h"
-
 #include "draw.h"
 
-#define OFFSET 200
+#define OFFSET 100
+#define COLOR_RED 0xff5050
+#define COLOR_WHITE 0x303030
 
-void	draw_line(void *mlx_id, void *win_id, t_pnt a, t_pnt b)
+void	do_draw_line(void *mlx_id, void *win_id, t_pnt2d origin, t_pnt2d a, t_pnt2d b)
 {
-	t_int64 delta[3];
-	t_int64 y;
-	t_int64 x;
-	double error;
+	int foo = 40;
 
-	delta[0] = b.x - a.x;		/* not zero! */
-	delta[1] = b.y - b.y;
-	delta[2] = (double)delta[1] / delta[0];
-
-	error = 0.0;
-	y = a.y;
-	x = a.x;
-	while (x < b.x)
-	{
-		point_plot(mlx_id, win_id, (t_pnt){x, y, 0});
-		error += delta[2];
-		if (error >= 0.5)
-		{
-			y += delta[1] >= 0 ? 1 : -1;
-			error--;
-		}
-	}
+	while (foo--)
+		mlx_pixel_put(mlx_id, win_id,
+						a.x + origin.x + foo, a.y + origin.y + foo,
+						COLOR_RED);
+	foo = 25;
+	while (foo--)
+		mlx_pixel_put(mlx_id, win_id,
+						b.x + origin.x + foo, b.y + origin.y + foo,
+						COLOR_WHITE);
 }
+
 
 void	do_mlx_test(void)
 {
 	const t_uint32 length = 3, width = 4;
-	t_pnt points[length][width] = {
-		{
-			{1,0,0},
-			{0,0,1},
-			{2,3,1},
-			{2,3,2},
-		},
-		{
-			{0,1,0},
-			{0,1,0},
-			{3,2,3},
-			{3,4,3},
-		},
-		{
-			{0,0,1},
-			{1,0,0},
-			{1,3,2},
-			{2,3,2},
-		},
+	t_pnt2d points[length][width] = {
+		{{1,0}, {0,0}, {2,3}, {2,3},},
+		{{0,1}, {0,1}, {3,2}, {3,4},},
+		{{0,0}, {1,0}, {1,3}, {2,3},},
 	};
 
 	void *mlx_id;
 	void *win_id;
 
-	t_uint32 i;
-	t_uint32 j;
-
+	t_pnt2d index = {0,0};
 	mlx_id = mlx_init();
 	win_id = mlx_new_window(mlx_id,
 							width * OFFSET,
 							length * OFFSET,
 							"FDF");
 
-	t_pnt origin = {width * OFFSET / 2, length * OFFSET / 2, 0};
+	t_pnt2d origin = {width * OFFSET / 2, length * OFFSET / 2};
 
-	i = 0;
-	while (i < length)
+	index.y = 0;
+	while (index.y < length)
 	{
-		j = 0;
-		while (j < width)
+		index.x = 0;
+		while (index.x < width)
 		{
-			printf("%ld, %ld, %ld\n",
-				   points[i][j].x,
-				   points[i][j].y,
-				   points[i][j].z);
-
+			printf("%ld, %ld\n", points[index.y][index.x].x,
+									points[index.y][index.x].y);
 			int foo = 100;
 			while (foo--)
 				mlx_pixel_put(mlx_id, win_id,
-							  origin.x + points[i][j].x + foo * 2 ,
-							  origin.y + points[i][j].y + foo * 2,
+							  origin.x + points[index.y][index.x].x + foo * 2 ,
+							  origin.y + points[index.y][index.x].y + foo * 2,
 							  255);
-			j++;
+			index.x++;
 		}
-		i++;
+		index.y++;
 	}
 
 	mlx_loop(mlx_id);
@@ -129,7 +100,7 @@ void	do_get_coords_test(void)
 	char *str = "10 20 10 -2";
 	const int width = ft_wordcount(str, ' '), n_tests = 5;
 	t_uint16 i = 0, j = 0;
-	t_pnt *pnts = NULL;
+	t_pnt3d *pnts = NULL;
 
 	while (i < n_tests)
 	{
@@ -152,38 +123,26 @@ void	do_get_coords_test(void)
 	printf("----- ^^^ -------");
 }
 
-const int win_length = 700, win_width = 700,
-	ori_x = win_width / 2, ori_y = win_length / 2;
+const int win_length = 700, win_width = 700;
 
 int main(int argc, char *argv[])
 {
 	/* do_read_fdf_test(); */
-	do_mlx_test();
+	/* do_mlx_test(); */
 
 	void *mlx_id, *win_id;
+	t_pnt2d head =  {10, -10}, tail = {50, 35},
+		origin = {win_width / 2, win_length / 2};
 
-	/*
 	mlx_id = mlx_init();
 	win_id = mlx_new_window(mlx_id, win_length, win_width, "FDF");
-	*/
+
 	do_get_coords_test();
+	do_draw_line(mlx_id, win_id, origin, head, tail);
 
+	mlx_loop(mlx_id);
+	mlx_clear_window(mlx_id, win_id);
+	mlx_destroy_window(mlx_id, win_id);
 
-	/*
-	draw_line(NULL, NULL,
-			  (t_pnt){0, ori_y, 0},
-			  (t_pnt){ori_x * 2, ori_y, 0});
-
-	draw_line(NULL, NULL,
-			  (t_pnt){ori_x, 0, 0},
-			  (t_pnt){ori_x, 2 * ori_y, 0});
-
-	ft_putendl("-------------");
-	*/
-	/*
-	   mlx_loop(mlx_id);
-	   mlx_clear_window(mlx_id, win_id);
-	   mlx_destroy_window(mlx_id, win_id);
-	*/
 	return (0);
 }
