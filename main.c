@@ -6,7 +6,7 @@
 /*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 18:36:12 by archid-           #+#    #+#             */
-/*   Updated: 2019/07/17 01:54:40 by archid-          ###   ########.fr       */
+/*   Updated: 2019/07/17 02:22:12 by archid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,55 @@
 #include "fdf.h"
 #include "draw.h"
 
-#define OFFSET 100
-#define COLOR_RED 0xff5050
-#define COLOR_WHITE 0x303030
+#define OFFSET 5
 
-void	do_draw_line(void *mlx_id, void *win_id, t_pnt2d origin, t_pnt2d a, t_pnt2d b)
+#define FIRE_BRICK			0xB22222
+#define DIM_GRAY			0x696969
+#define LIGHT_GRAY			0xD3D3D3
+#define DARK_GREEN			0x006400
+
+void	do_draw_2d_plan(void *mlx_id, void *win_id, t_pnt2d origin)
 {
-	int foo = 40;
+	int foo;
+	int offset;
+	int count;
+
+	count = offset = 0;
+	while (offset < 2 * origin.x) {
+		foo = 0;
+		while (foo < origin.x * 2)
+			mlx_pixel_put(mlx_id, win_id, foo++, offset,
+						  count % 5 == 0 ? LIGHT_GRAY : DIM_GRAY);
+		count++;
+		offset += OFFSET;
+	}
+
+	count = offset = 0;
+	while (offset < 2 * origin.y) {
+		foo = 0;
+		while (foo < origin.y * 2)
+			mlx_pixel_put(mlx_id, win_id, offset, foo++,
+						  count % 5 == 0 ? LIGHT_GRAY : DIM_GRAY);
+		count++;
+		offset += OFFSET;
+	}
+}
+
+
+void	do_draw_2d_line(void *mlx_id, void *win_id, t_pnt2d origin,
+							t_pnt2d a, t_pnt2d b)
+{
+	int foo = 100;
 
 	while (foo--)
 		mlx_pixel_put(mlx_id, win_id,
-						a.x + origin.x + foo, a.y + origin.y + foo,
-						COLOR_RED);
-	foo = 25;
+						a.x + origin.x + foo, a.y + origin.y + foo * 2,
+						FIRE_BRICK);
+	foo = 100;
 	while (foo--)
 		mlx_pixel_put(mlx_id, win_id,
-						b.x + origin.x + foo, b.y + origin.y + foo,
-						COLOR_WHITE);
+						b.x + origin.x + foo, b.y + origin.y + foo * 2,
+						DARK_GREEN);
 }
 
 
@@ -138,7 +170,9 @@ int main(int argc, char *argv[])
 	win_id = mlx_new_window(mlx_id, win_length, win_width, "FDF");
 
 	do_get_coords_test();
-	do_draw_line(mlx_id, win_id, origin, head, tail);
+
+	do_draw_2d_plan(mlx_id, win_id, origin);
+	do_draw_2d_line(mlx_id, win_id, origin, head, tail);
 
 	mlx_loop(mlx_id);
 	mlx_clear_window(mlx_id, win_id);
