@@ -4,10 +4,10 @@
 SCHEDULED: <2019-07-15 Mon 21:54>
 DEADLINE: <2019-07-23 Tue 00:00>
 
-+ [X] [[get input from file]]
-+ [ ] [[line drawing algorithm!]]
-+ [ ] [[plot all the points]]
-+ [ ] [[color interfaces]]
++ [X] get input from file
++ [ ] line drawing algorithm!
++ [ ] plot all the points
++ [ ] color interfaces
 
 ** DONE get input from file
 
