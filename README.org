@@ -1,13 +1,17 @@
-* TODO FDF [1/4]
+* TODO FDF [1/6]
 - State "IN-PROGRESS" from "TODO"       [2019-07-16 Tue 23:22]
 
 SCHEDULED: <2019-07-15 Mon 21:54>
 DEADLINE: <2019-07-23 Tue 00:00>
 
-+ [X] get input from file
-+ [ ] line drawing algorithm!
-+ [ ] plot all the points
-+ [ ] color interfaces
+_The process goes like this_:
+
+  - [ ] read the input =.fdf= file -- as a matrix of 3d-points
+  - [ ] choose a 3d-point for /camera view angle/ -- from where we would be projecting our view
+  - [ ] project 3d points over 2d plan -- get tranformation a matrix!
+  - [ ] plot the points on the plan based on the camera position
+    - [ ] /draw lines between all the points/ -- in case of points were there z-axis is not =0=, the projection should do it's job
+    - [ ] /color each step over z-axis with a degree of some color/ -- example in the pdf, page 10.
 
 ** DONE get input from file
 

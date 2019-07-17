@@ -1,3 +1,5 @@
 all:
-	gcc gnl.c main.c point.c libft/libft.a -lm -o fdf \
-		-lmlx -framework OpenGL -framework AppKit
+	gcc *.c -o fdf -lm -Llibft -lft -lmlx \
+			-framework OpenGL -framework AppKit
+test: all
+	./fdf maps/42.fdf
