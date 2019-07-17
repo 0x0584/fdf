@@ -6,7 +6,7 @@
 /*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 18:36:12 by archid-           #+#    #+#             */
-/*   Updated: 2019/07/17 02:22:12 by archid-          ###   ########.fr       */
+/*   Updated: 2019/07/17 05:59:14 by archid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,40 +16,112 @@
 #include "fdf.h"
 #include "draw.h"
 
-#define OFFSET 5
+#define OFFSET 20
 
 #define FIRE_BRICK			0xB22222
 #define DIM_GRAY			0x696969
 #define LIGHT_GRAY			0xD3D3D3
 #define DARK_GREEN			0x006400
 
+void	do_draw_3d_cube(void *mlx_id, void *win_id, t_pnt3d origin)
+{
+	t_pnt3d triangle[] = {
+		{0,0,0},
+		{0,1,0},
+		{1,0,0},
+	};
+}
+
+void	do_draw_3d_shape(void *mlx_id, void *win_id, t_pnt3d origin)
+{
+	int i = 0;
+	while (i < 100)
+		mlx_pixel_put(mlx_id, win_id, (origin.x + i++) / origin.z,
+						origin.y / origin.z, FIRE_BRICK);
+	i = 0;
+	while (i < 100)
+		mlx_pixel_put(mlx_id, win_id, origin.x / origin.z,
+					  (origin.y + i++) / origin.z, FIRE_BRICK);
+
+}
+
+void	do_draw_3d_plan(void *mlx_id, void *win_id, t_pnt3d origin)
+{
+	int foo;
+	int offset;
+
+	offset = 0;
+	while (offset <= 2 * origin.x) {
+		foo = 0;
+		while (foo <= origin.x * 2) {
+			mlx_pixel_put(mlx_id, win_id, foo / origin.z,
+							offset / origin.z, DIM_GRAY);
+			foo += (foo + 1) % OFFSET == 0 ? 2 : 1;
+		}
+		foo = 0;
+		while (foo <= origin.x * 2) {
+			mlx_pixel_put(mlx_id, win_id, foo / origin.z,
+							offset / origin.z, LIGHT_GRAY);
+			foo += OFFSET;
+		}
+		offset += OFFSET;
+	}
+
+	offset = 0;
+	while (offset <= 2 * origin.x) {
+		foo = 0;
+		while (foo <= origin.x * 2) {
+			mlx_pixel_put(mlx_id, win_id, offset / origin.z,
+							foo / origin.z, DIM_GRAY);
+			foo += (foo + 1) % OFFSET == 0 ? 2 : 1;
+		}
+		foo = 0;
+		while (foo <= origin.x * 2) {
+			mlx_pixel_put(mlx_id, win_id, offset / origin.z,
+							foo / origin.z, LIGHT_GRAY);
+			foo += OFFSET;
+		}
+		offset += OFFSET;
+	}
+
+}
+
 void	do_draw_2d_plan(void *mlx_id, void *win_id, t_pnt2d origin)
 {
 	int foo;
 	int offset;
-	int count;
 
-	count = offset = 0;
-	while (offset < 2 * origin.x) {
+	offset = 0;
+	while (offset <= 2 * origin.x) {
 		foo = 0;
-		while (foo < origin.x * 2)
-			mlx_pixel_put(mlx_id, win_id, foo++, offset,
-						  count % 5 == 0 ? LIGHT_GRAY : DIM_GRAY);
-		count++;
+		while (foo <= origin.x * 2) {
+			mlx_pixel_put(mlx_id, win_id, foo, offset, DIM_GRAY);
+			foo += (foo + 1) % OFFSET == 0 ? 2 : 1;
+		}
+		foo = 0;
+		while (foo <= origin.x * 2) {
+			mlx_pixel_put(mlx_id, win_id, foo, offset, LIGHT_GRAY);
+			foo += OFFSET;
+		}
 		offset += OFFSET;
 	}
 
-	count = offset = 0;
-	while (offset < 2 * origin.y) {
+	offset = 0;
+	while (offset <= 2 * origin.x) {
 		foo = 0;
-		while (foo < origin.y * 2)
-			mlx_pixel_put(mlx_id, win_id, offset, foo++,
-						  count % 5 == 0 ? LIGHT_GRAY : DIM_GRAY);
-		count++;
+		while (foo <= origin.x * 2) {
+			mlx_pixel_put(mlx_id, win_id, offset, foo, DIM_GRAY);
+			foo += (foo + 1) % OFFSET == 0 ? 2 : 1;
+		}
+		foo = 0;
+		while (foo <= origin.x * 2) {
+			mlx_pixel_put(mlx_id, win_id, offset, foo, LIGHT_GRAY);
+			foo += OFFSET;
+		}
 		offset += OFFSET;
 	}
+
 }
-
 
 void	do_draw_2d_line(void *mlx_id, void *win_id, t_pnt2d origin,
 							t_pnt2d a, t_pnt2d b)
@@ -66,7 +138,6 @@ void	do_draw_2d_line(void *mlx_id, void *win_id, t_pnt2d origin,
 						b.x + origin.x + foo, b.y + origin.y + foo * 2,
 						DARK_GREEN);
 }
-
 
 void	do_mlx_test(void)
 {
@@ -127,35 +198,40 @@ void	do_read_fdf_test(int argc, char**argv)
 }
 */
 
-void	do_get_coords_test(void)
+void	do_get_coords_test(void *mlx_id, void *win_id, t_pnt2d origin)
 {
 	char *str = "10 20 10 -2";
 	const int width = ft_wordcount(str, ' '), n_tests = 5;
 	t_uint16 i = 0, j = 0;
 	t_pnt3d *pnts = NULL;
+	int foo = 100;
 
 	while (i < n_tests)
 	{
 		j = 0;
-		printf("----- OOOOO ------\n");
 		pnts = get_coords_in_line(str, i++);
-		printf("----- //// ------\n");
 		while (j < width)
 		{
+
 			/* the cast is because printf returns an int, we don't want that! */
 			(void)printf("(x:%ld, y:%ld, z:%ld) ",
 						 pnts[j].x, pnts[j].y, pnts[j].z);
+
+			mlx_pixel_put(mlx_id, win_id,
+						  origin.x + pnts[j].x + foo * 2,
+						  origin.y - pnts[j].y + foo * 2,
+						  FIRE_BRICK);
+			foo -= 10;
 			j++;
 		}
 		(void)printf("\n");
 		j = 0;
 		free(pnts);
-		printf("------ %d ------\n", i);
 	}
-	printf("----- ^^^ -------");
 }
 
 const int win_length = 700, win_width = 700;
+const double depth = 1;
 
 int main(int argc, char *argv[])
 {
@@ -163,16 +239,20 @@ int main(int argc, char *argv[])
 	/* do_mlx_test(); */
 
 	void *mlx_id, *win_id;
-	t_pnt2d head =  {10, -10}, tail = {50, 35},
-		origin = {win_width / 2, win_length / 2};
+	t_pnt2d origin_2d = {win_width / 2, win_length / 2};
+	t_pnt3d origin_3d = {win_width / 2, win_length / 2, depth};
 
 	mlx_id = mlx_init();
 	win_id = mlx_new_window(mlx_id, win_length, win_width, "FDF");
 
-	do_get_coords_test();
 
-	do_draw_2d_plan(mlx_id, win_id, origin);
-	do_draw_2d_line(mlx_id, win_id, origin, head, tail);
+	/* do_draw_2d_plan(mlx_id, win_id, origin_2d); */
+	/* do_draw_2d_line(mlx_id, win_id, origin_2d, head, tail); */
+
+	do_draw_3d_plan(mlx_id, win_id, origin_3d);
+	/* do_draw_3d_shape(mlx_id, win_id, origin_3d); */
+
+	do_get_coords_test(mlx_id, win_id, origin_2d);
 
 	mlx_loop(mlx_id);
 	mlx_clear_window(mlx_id, win_id);

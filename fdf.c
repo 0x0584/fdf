@@ -39,12 +39,13 @@ t_fdf_data	*point_read_fdf(const int fd)
     lines = file_to_lst(fd);
 	fdf->width = ft_wordcount(lines->content, ' ');
 	fdf->length = ft_lstlen(lines);
-	fdf->base = ALLOC(t_pnt **, fdf->length, sizeof(t_pnt *));
+	fdf->base = ALLOC(t_pnt3d **, fdf->length, sizeof(t_pnt3d *));
 	walk = lines;
 	while (walk)
 	{
-		fdf->base[i] = get_coords_in_line(walk->content, i++);
+		fdf->base[i] = get_coords_in_line(walk->content, i);
 		walk = walk->next;
+		i++;
 	}
     ft_lstdel(&lines, line_free);
 	return (fdf);
