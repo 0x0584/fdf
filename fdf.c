@@ -2,7 +2,7 @@
     fdf.c
     created: July, 16 06:51
 */
-
+#include "gnl.h"
 #include "fdf.h"
 
 // void		point_dbg(t_pnt_array pnts);

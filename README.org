@@ -6,7 +6,7 @@ DEADLINE: <2019-07-23 Tue 00:00>
 
 _The process goes like this_:
 
-  - [ ] read the input =.fdf= file -- as a matrix of 3d-points
+  - [X] read the input =.fdf= file -- as a matrix of 3d-points
   - [ ] choose a 3d-point for /camera view angle/ -- from where we would be projecting our view
   - [ ] project 3d points over 2d plan -- get tranformation a matrix!
   - [ ] plot the points on the plan based on the camera position

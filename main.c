@@ -229,8 +229,29 @@ void	do_get_coords_test(void *mlx_id, void *win_id, t_pnt2d origin)
 		free(pnts);
 	}
 }
+void	draw_line2(void *mlx_id, void *win_id, int w,int h/*t_pnt2d a, t_pnt2d b*/)
+{
+	/* TODO: draw a line from point A to point B
+	 *
+	 * IDEA:
+	 *
+	 * see if a line have passed the middle of the pixle,
+	 * if so, print the y+1 point, else print y
+	 */
+	int y1 = 0;
+	int x = 0;
+	float y = 0;
+	h = 0;
+	while (x < w)
+	{
+		y = 0.7*x + y1;
+		mlx_pixel_put(mlx_id, win_id,x,y, 0x00FFFFFF);
+		x++;
+	}
+	
+}
 
-const int win_length = 700, win_width = 700;
+const int win_length = 1000, win_width = 700;
 const double depth = 1;
 
 int main(int argc, char *argv[])
@@ -249,8 +270,10 @@ int main(int argc, char *argv[])
 	/* do_draw_2d_plan(mlx_id, win_id, origin_2d); */
 	/* do_draw_2d_line(mlx_id, win_id, origin_2d, head, tail); */
 
-	do_draw_3d_plan(mlx_id, win_id, origin_3d);
-	/* do_draw_3d_shape(mlx_id, win_id, origin_3d); */
+	draw_line2(mlx_id, win_id, 700,0);
+
+	//do_draw_3d_plan(mlx_id, win_id, origin_3d);
+	//do_draw_3d_shape(mlx_id, win_id, origin_3d); 
 
 	do_get_coords_test(mlx_id, win_id, origin_2d);
 

@@ -16,6 +16,6 @@
 # include "point.h"
 # include <math.h>
 
-void	draw_line(void *mlx_id, void *win_id, t_pnt2d a, t_pnt2d b);
+void	draw_line(void *mlx_id, void *win_id, int w, int h/*t_pnt2d a, t_pnt2d b*/);
 
 #endif
