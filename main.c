@@ -6,7 +6,7 @@
 /*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 18:36:12 by archid-           #+#    #+#             */
-/*   Updated: 2019/07/17 05:59:14 by archid-          ###   ########.fr       */
+/*   Updated: 2019/07/17 21:12:05 by archid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,18 +185,51 @@ void	do_mlx_test(void)
 
 }
 
-/*
 void	do_read_fdf_test(int argc, char**argv)
 {
 	t_fdf_data *fdf;
+	t_uint64 i, j;
 	int fd;
+	int foo;
 
 	if (argc != 2 || !((fd = open(argv[1], O_RDONLY)) >= 0))
 		return ;
-	fdf = point_read_fdf(fd);
-	point_dbg(*fdf);
+
+	i = 0;
+	puts("this");
+	fdf = fdf_read(fd);
+	puts("this");
+	while (i < fdf->length)
+	{
+		j = 0;
+		while (j < fdf->width)
+		{
+			(void)printf(" >> (x:%ld, y:%ld, z:%ld) ",
+						 fdf->base[i][j].x,
+						 fdf->base[i][j].y,
+						 fdf->base[i][j].z);
+
+			/*
+			mlx_string_put(mlx_id, win_id,
+						   fdf->base[i][j].x + foo + origin.x,
+						   fdf->base[i][j].y + foo + origin.y,
+						   FIRE_BRICK,
+						   "this is a test");
+			*/
+			/*
+			foo = 50;
+			while (foo--)
+				mlx_pixel_put(mlx_id, win_id,
+							  fdf->base[i][j].x + foo + origin.x,
+							  fdf->base[i][j].y + foo + origin.y,
+							  FIRE_BRICK);
+			*/
+			j++;
+		}
+		i++;
+	}
+	fdf_free(&fdf);
 }
-*/
 
 void	do_get_coords_test(void *mlx_id, void *win_id, t_pnt2d origin)
 {
@@ -282,13 +315,14 @@ int main(int argc, char *argv[])
 	/* do_read_fdf_test(); */
 	/* do_mlx_test(); */
 
-	void *mlx_id, *win_id;
+	void *mlx_id = NULL, *win_id = NULL;
 	t_pnt2d origin_2d = {win_width / 2, win_length / 2};
 	t_pnt3d origin_3d = {win_width / 2, win_length / 2, depth};
 
+	
 	mlx_id = mlx_init();
 	win_id = mlx_new_window(mlx_id, win_length, win_width, "FDF");
-
+	
 
 	/* do_draw_2d_plan(mlx_id, win_id, origin_2d); */
 	/* do_draw_2d_line(mlx_id, win_id, origin_2d, head, tail); */
@@ -298,11 +332,14 @@ int main(int argc, char *argv[])
 	//do_draw_3d_plan(mlx_id, win_id, origin_3d);
 	//do_draw_3d_shape(mlx_id, win_id, origin_3d); 
 
-	do_get_coords_test(mlx_id, win_id, origin_2d);
+	//puts("this");
+	//do_read_fdf_test(argc, argv);
+
 
 	mlx_loop(mlx_id);
 	mlx_clear_window(mlx_id, win_id);
 	mlx_destroy_window(mlx_id, win_id);
+	
 
 	return (0);
 }
