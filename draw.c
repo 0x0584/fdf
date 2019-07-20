@@ -11,25 +11,64 @@
 /* ************************************************************************** */
 
 #include "draw.h"
+#include <mlx.h>
+#include <stdio.h>
 
-void	draw_line(void *mlx_id, void *win_id, int w,int h/*t_pnt2d a, t_pnt2d b*/)
+void	draw_line(void *mlx_id, void *win_id, t_pnt2d a, t_pnt2d b)
 {
-	/* TODO: draw a line from point A to point B
-	 *
-	 * IDEA:
-	 *
-	 * see if a line have passed the middle of the pixle,
-	 * if so, print the y+1 point, else print y
-	 */
-	/*int y1 = 0;
-	int x = 0;
-	float y = 0;
-	h = 0;
-	while (x < w)
+	float ex = labs(b.x - a.x);
+	float ey = labs(b.y - a.y);
+	float dx = 2 * ex;
+	float dy = 2 * ey;
+
+	int xincr = 1;
+	int yincr = 1;
+
+	int i = 0;
+	int Dx = ex;
+	int Dy = ey;
+
+	//pour gerer 2 posibilite ds chaque cas
+	if (a.x > b.x)
+		xincr = -1;
+	if (a.y > b.y)
+		yincr = -1;
+	if(a.x == b.x)
+		xincr = 0;
+	if(a.y == b.y)
+		yincr = 0;
+	float y = a.y;
+
+	if(Dx < Dy) //1er cas
 	{
-		y = 0.7*x + y1;
-		mlx_pixel_put(mlx_id, win_id,x,y, 0x00FFFFFF);
-		x++;
+		while (i <= Dy)
+		{
+			mlx_pixel_put(mlx_id, win_id, a.x, a.y, 0x00FFAA);
+			i++;
+			a.x = a.x + xincr; 
+			ex = ex - dy;
+			if(ex < 0)
+			{
+				a.y = a.y + yincr;
+				ex = ex + dx;
+			}
+		printf ("\n%ld %ld",a.x,a.y);
+		}
 	}
-	*/
+	else  //2eme cas
+	{
+		while (i <= Dx)
+		{
+			mlx_pixel_put(mlx_id, win_id,a.x,a.y, 0x00FFAA);
+			i++;
+			a.y = a.y + yincr;
+			ey = ey - dx;
+			if(ey < 0)
+			{
+				a.x = a.x + xincr;
+				ey = ey + dy;
+			}
+		printf ("\n%ld %ld",a.x,a.y);
+		}
+	}
 }

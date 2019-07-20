@@ -262,56 +262,22 @@ void	do_get_coords_test(void *mlx_id, void *win_id, t_pnt2d origin)
 		free(pnts);
 	}
 }
-void	draw_line2(void *mlx_id, void *win_id, int w,int h/*t_pnt2d a, t_pnt2d b*/)
-{
-	/* TODO: draw a line from point A to point B
-	 *
-	 * IDEA:
-	 *
-	 * see if a line have passed the middle of the pixle,
-	 * if so, print the y+1 point, else print y
-	 */
-	int x1 = 50, y1 = 50;
-	int x2 = 200, y2 = 180;
-	int x3 = 150, y3 = 130;
-	float dx = abs(x2 - x1);
-	float dy = abs(y2 - y1);
-	float coefDir = dy/dx;
-	float dx1 = abs(x3 - x1);
-	float dy1 = abs(y3 - y1);
-	float coefDir2 = dy1/dx1;
 
-	int x = 0;
-	float y = 0;
-	h = 0;
-	while (x < w)
-	{
-		y = coefDir*x + y1;
-		y2 = (int)(y + 0.5f);
-		//mlx_pixel_put(mlx_id, win_id,x,y, 0xFFFFFF);
-		mlx_pixel_put(mlx_id, win_id,x,y2, 0x00FFAA);
-		printf ("\nx1 = %d | y1 = %d | y = %.2f | y2 = %d",x1,(int)y,y, (int)y2);
-		x++;
-	}
-	x = 0;
-	y = 0;
-	while (x < w)
-	{
-		y = coefDir2*x + y1;
-		y3 = (int)(y + 0.5f);
-		//mlx_pixel_put(mlx_id, win_id,x,y, 0xFFFFFF);
-		mlx_pixel_put(mlx_id, win_id,x,y3, 0x00FFAA);
-		printf ("\nx1 = %d | y1 = %d | y = %.2f | y2 = %d",x1,(int)y,y, (int)y2);
-		x++;
-	}
-	
-}
-
-const int win_length = 200, win_width = 200;
+const int win_length = 400, win_width = 400;
 const double depth = 1;
 
 int main(int argc, char *argv[])
 {
+	t_pnt2d a,b,c,d,m,n,j,h; 
+	a.x =100 ; a.y = 100;
+	b.x = 100 ; b.y = 300;
+	 c.x =100 ; c.y = 300;
+	 d.x = 300 ; d.y = 300;
+	m.x =300 ; m.y = 300;
+	n.x = 300 ; n.y = 100;
+	j.x =300 ; j.y = 100;
+	h.x = 100 ; h.y = 100;
+
 	/* do_read_fdf_test(); */
 	/* do_mlx_test(); */
 
@@ -327,7 +293,11 @@ int main(int argc, char *argv[])
 	/* do_draw_2d_plan(mlx_id, win_id, origin_2d); */
 	/* do_draw_2d_line(mlx_id, win_id, origin_2d, head, tail); */
 
-	draw_line2(mlx_id, win_id, 700,0);
+	draw_line(mlx_id, win_id, a,b);
+	draw_line(mlx_id, win_id, c,d);
+	draw_line(mlx_id, win_id, m,n);
+	draw_line(mlx_id, win_id, j,h);
+
 
 	//do_draw_3d_plan(mlx_id, win_id, origin_3d);
 	//do_draw_3d_shape(mlx_id, win_id, origin_3d); 
