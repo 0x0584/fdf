@@ -52,10 +52,10 @@ void	draw_line(void *mlx_id, void *win_id, t_pnt2d a, t_pnt2d b)
 				a.y = a.y + yincr;
 				ex = ex + dx;
 			}
-		printf ("\n%ld %ld",a.x,a.y);
+		//printf ("\n%ld %ld",a.x,a.y);
 		}
 	}
-	else  //2eme cas
+	else  //2eme cas (Dx >= Dy)
 	{
 		while (i <= Dx)
 		{
@@ -68,7 +68,7 @@ void	draw_line(void *mlx_id, void *win_id, t_pnt2d a, t_pnt2d b)
 				a.x = a.x + xincr;
 				ey = ey + dy;
 			}
-		printf ("\n%ld %ld",a.x,a.y);
+		//printf ("\n%ld %ld",a.x,a.y);
 		}
 	}
 }

@@ -263,23 +263,31 @@ void	do_get_coords_test(void *mlx_id, void *win_id, t_pnt2d origin)
 	}
 }
 
-const int win_length = 400, win_width = 400;
+const int win_length = 400, win_width = 500;
 const double depth = 1;
 
 int main(int argc, char *argv[])
 {
-	t_pnt2d a,b,c,d,m,n,j,h; 
-	a.x =100 ; a.y = 100;
-	b.x = 100 ; b.y = 300;
-	 c.x =100 ; c.y = 300;
-	 d.x = 300 ; d.y = 300;
-	m.x =300 ; m.y = 300;
-	n.x = 300 ; n.y = 100;
-	j.x =300 ; j.y = 100;
-	h.x = 100 ; h.y = 100;
+	const t_uint32 length = 3, width = 4;
+	t_pnt2d points[length][width] = {
+		{{100,100}, {100,200}, {100,300}, {100,400},},
+		{{200,100}, {200,200}, {200,300}, {200,400},},
+		{{300,100}, {300,200}, {300,300}, {300,400},},
+	};
+	int i=0;
+	int j = 0;
+	t_pnt2d a,b,c,d,m,n,k,h; 
+	// a.x =150 ; a.y = 150;
+	// b.x = 150 ; b.y = 350;
+	// c.x =150 ; c.y = 350;
+	// d.x = 350 ; d.y = 350;
+	// m.x =350 ; m.y = 350;
+	// n.x = 350 ; n.y = 150;
+	// k.x =350 ; k.y = 150;
+	// h.x = 150 ; h.y = 150;
 
-	/* do_read_fdf_test(); */
-	/* do_mlx_test(); */
+	//do_read_fdf_test(argc,argv); 
+	 //do_mlx_test(); 
 
 	void *mlx_id = NULL, *win_id = NULL;
 	t_pnt2d origin_2d = {win_width / 2, win_length / 2};
@@ -293,17 +301,34 @@ int main(int argc, char *argv[])
 	/* do_draw_2d_plan(mlx_id, win_id, origin_2d); */
 	/* do_draw_2d_line(mlx_id, win_id, origin_2d, head, tail); */
 
-	draw_line(mlx_id, win_id, a,b);
-	draw_line(mlx_id, win_id, c,d);
-	draw_line(mlx_id, win_id, m,n);
-	draw_line(mlx_id, win_id, j,h);
+	while (i < 3)
+	{
+		j = 0;
+		while (j < 4) 
+		{
+			if (j != 3)
+			draw_line(mlx_id, win_id, points[i][j],points[i][j + 1]);
+			if (i != 0)
+			draw_line(mlx_id, win_id, points[i][j],points[i - 1][j]);
+			if (j != 0)
+			draw_line(mlx_id, win_id, points[i][j],points[i][j - 1]);
+			if(i != 2)
+			draw_line(mlx_id, win_id, points[i][j],points[i + 1][j]);
+			j++;
+		}
+		i++;
+	}
+	// draw_line(mlx_id, win_id, a,b);
+	// draw_line(mlx_id, win_id, c,d);
+	// draw_line(mlx_id, win_id, m,n);
+	// draw_line(mlx_id, win_id, k,h);
 
 
 	//do_draw_3d_plan(mlx_id, win_id, origin_3d);
-	//do_draw_3d_shape(mlx_id, win_id, origin_3d); 
+	// do_draw_3d_shape(mlx_id, win_id, origin_3d); 
 
-	//puts("this");
-	//do_read_fdf_test(argc, argv);
+	// puts("this");
+	  //do_read_fdf_test(argc, argv);
 
 
 	mlx_loop(mlx_id);
