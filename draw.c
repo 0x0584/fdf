@@ -14,7 +14,28 @@
 #include <mlx.h>
 #include <stdio.h>
 
-void	draw_line(void *mlx_id, void *win_id, t_pnt3d a, t_pnt3d b)
+void draw_line(void *mlx, void *win, t_pnt3d a, t_pnt3d b)
+{
+	int x0, x1, y0, y1;
+
+	x0 = a.x;
+	x1 = b.x;
+	y0 = a.y;
+	y1 = b.y;
+  int dx = abs(x1-x0), sx = x0<x1 ? 1 : -1;
+  int dy = abs(y1-y0), sy = y0<y1 ? 1 : -1; 
+  int err = (dx>dy ? dx : -dy)/2, e2;
+ 
+  for(;;){
+    mlx_pixel_put(mlx, win, x0, y0, 0x00FFAA);
+    if (x0==x1 && y0==y1) break;
+    e2 = err;
+    if (e2 >-dx) { err -= dy; x0 += sx; }
+    if (e2 < dy) { err += dx; y0 += sy; }
+  }
+}
+
+/*void	draw_line(void *mlx_id, void *win_id, t_pnt3d a, t_pnt3d b)
 {
 	float ex = labs(b.x - a.x);
 	float ey = labs(b.y - a.y);
@@ -72,3 +93,4 @@ void	draw_line(void *mlx_id, void *win_id, t_pnt3d a, t_pnt3d b)
 		}
 	}
 }
+*/

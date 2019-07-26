@@ -268,6 +268,21 @@
 const int win_length = 2000, win_width = 1000;
 const double depth = 1;
 
+typedef struct s_env
+{
+	void *mlx;
+	void *win;
+}				t_env;
+
+int	mouse_move(int x, int y, void *param)
+{
+	t_env *env;
+
+	env = param;
+	draw_line(env->mlx, env->win, (t_pnt3d){1000,500,0},(t_pnt3d){x,y,0});
+	return (0);
+}
+
 int main(int argc, char *argv[])
 {
 	const t_uint32 length = 3, width = 4;
@@ -278,12 +293,13 @@ int main(int argc, char *argv[])
 	};
 	t_pnt3d **resX,**resY,**resZ;
 	//t_pnt3d *tab;
-	float angle = 1;
+	float angle = 0.5;
 	float rot_matrix_x[3][3] = {{1,0,0},
                               {0,cos(angle),-sin(angle)},
                               {0,sin(angle),cos(angle)}};
 	int i = 0;
 	int j = 0;
+	t_env 	env;
 	t_pnt3d pn;
 	t_pnt3d pm;
 	
@@ -316,6 +332,8 @@ int main(int argc, char *argv[])
 	
 	mlx_id = mlx_init();
 	win_id = mlx_new_window(mlx_id, win_length, win_width, "FDF");
+	env.win = win_id;
+	env.mlx = mlx_id;
 	
 
 	/* do_draw_2d_plan(mlx_id, win_id, origin_2d); */
@@ -361,41 +379,42 @@ int main(int argc, char *argv[])
 	// 	}
 	// 	i++;
 	// }
+	while (i < 3)
+	{
+		j = 0;
+		while (j < 4) 
+		{
+			mlx_pixel_put(mlx_id, win_id, resZ[i][j].x, resZ[i][j].y, 0xFF00FF);
+			if (j != 3)
+				draw_line(mlx_id, win_id, resZ[i][j],resZ[i][j + 1]);
+			// if (i != 0)
+			// draw_line(mlx_id, win_id, resZ[i][j],resZ[i - 1][j]);
+			// if (j != 0)
+			// draw_line(mlx_id, win_id, resZ[i][j],resZ[i][j - 1]);
+			if(i != 2)
+				draw_line(mlx_id, win_id, resZ[i][j],resZ[i + 1][j]);
+			j++;
+		}
+		i++;
+	}
+	// i = 0;
 	// while (i < 3)
 	// {
 	// 	j = 0;
 	// 	while (j < 4) 
 	// 	{
 	// 		if (j != 3)
-	// 		draw_line(mlx_id, win_id, resZ[i][j],resZ[i][j + 1]);
+	// 		draw_line(mlx_id, win_id, points[i][j],points[i][j + 1]);
 	// 		// if (i != 0)
-	// 		// draw_line(mlx_id, win_id, resZ[i][j],resZ[i - 1][j]);
+	// 		// draw_line(mlx_id, win_id, points[i][j],points[i - 1][j]);
 	// 		// if (j != 0)
-	// 		// draw_line(mlx_id, win_id, resZ[i][j],resZ[i][j - 1]);
+	// 		// draw_line(mlx_id, win_id, points[i][j],points[i][j - 1]);
 	// 		if(i != 2)
-	// 		draw_line(mlx_id, win_id, resZ[i][j],resZ[i + 1][j]);
+	// 		draw_line(mlx_id, win_id, points[i][j],points[i + 1][j]);
 	// 		j++;
 	// 	}
 	// 	i++;
 	// }
-	// i = 0;
-	while (i < 3)
-	{
-		j = 0;
-		while (j < 4) 
-		{
-			if (j != 3)
-			draw_line(mlx_id, win_id, points[i][j],points[i][j + 1]);
-			if (i != 0)
-			draw_line(mlx_id, win_id, points[i][j],points[i - 1][j]);
-			if (j != 0)
-			draw_line(mlx_id, win_id, points[i][j],points[i][j - 1]);
-			if(i != 2)
-			draw_line(mlx_id, win_id, points[i][j],points[i + 1][j]);
-			j++;
-		}
-		i++;
-	}
 	// draw_line(mlx_id, win_id, a,b);
 	// draw_line(mlx_id, win_id, c,d);
 	// draw_line(mlx_id, win_id, m,n);
@@ -409,6 +428,7 @@ int main(int argc, char *argv[])
 	  //do_read_fdf_test(argc, argv);
 
 
+	mlx_hook(win_id, 6, 0, &mouse_move, &env);
 	mlx_loop(mlx_id);
 	mlx_clear_window(mlx_id, win_id);
 	mlx_destroy_window(mlx_id, win_id);
