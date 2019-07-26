@@ -14,7 +14,7 @@
 #include <mlx.h>
 #include <stdio.h>
 
-void	draw_line(void *mlx_id, void *win_id, t_pnt2d a, t_pnt2d b)
+void	draw_line(void *mlx_id, void *win_id, t_pnt3d a, t_pnt3d b)
 {
 	float ex = labs(b.x - a.x);
 	float ey = labs(b.y - a.y);
