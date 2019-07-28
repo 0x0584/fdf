@@ -22,7 +22,7 @@ static t_plist	file_to_lst(const int fd)
 	char			*str;
 
 	while ((ret = get_next_line(fd, &str)) > 0)
-		ft_lstpush(&lines, ft_lstnew(str, ft_strlen(str)));
+		ft_lstpush(&lines, ft_lstnew(str, ft_strlen(str) + 1)); // segfault prblm is fixed (missing +1)
 	if (ret < 0)
 		ft_lstdel(&lines, lstdel_linefree);
 	return (lines);
@@ -45,7 +45,7 @@ static t_plist	file_to_lst(const int fd)
 
 t_fdf_data		*fdf_read(const int fd)
 {
-	t_plist			lst[2];
+	t_plist			lst[2]; // i dont know why table of 2 dim ?
 	t_fdf_data		*fdf;
 	t_uint32		y_axis;
 
@@ -54,7 +54,6 @@ t_fdf_data		*fdf_read(const int fd)
 	UNLESS_RET(fdf = ALLOC(t_fdf_data *, 1, sizeof(t_fdf_data)), NULL);
 	puts("after alloc");
     lst[0] = file_to_lst(fd);
-
 	fdf->width = ft_wordcount(lst[0]->content, ' ');
 	fdf->length = ft_lstlen(lst[0]);
 	fdf->base = ALLOC(t_pnt3d **, fdf->length, sizeof(t_pnt3d *));
@@ -66,7 +65,7 @@ t_fdf_data		*fdf_read(const int fd)
 		lst[1] = lst[1]->next;
 		y_axis++;
 	}
-    ft_lstdel(&lst[0], lstdel_linefree);
+	ft_lstdel(&lst[0], lstdel_linefree);
 	return (fdf);
 }
 

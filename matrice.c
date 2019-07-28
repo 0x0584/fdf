@@ -32,7 +32,7 @@ t_pnt3d    produit_matrix(t_pnt3d point, float rot_matrix[3][3])
     return (ret_pnt);
 }
 
-t_pnt3d **rotationX(t_pnt3d matrix[3][4], t_uint32 length, t_uint32 width ,float angle)
+t_pnt3d **rotationX(t_pnt3d **matrix, t_uint32 length, t_uint32 width ,float angle)
 {
 
     t_pnt3d **ret_mat;
@@ -55,16 +55,16 @@ t_pnt3d **rotationX(t_pnt3d matrix[3][4], t_uint32 length, t_uint32 width ,float
         j = 0;
         while (j < width)
         {   
-            printf("%ld %ld %ld | ", matrix[i][j].x,matrix[i][j].y,matrix[i][j].z);
+          //  printf("%ld %ld %ld | ", matrix[i][j].x,matrix[i][j].y,matrix[i][j].z);
             ret_mat[i][j] = produit_matrix(matrix[i][j], rot_matrix_x);
-            printf("%ld %ld %ld\n",ret_mat[i][j].x, ret_mat[i][j].y,ret_mat[i][j].z);
+       //     printf("%ld %ld %ld\n",ret_mat[i][j].x, ret_mat[i][j].y,ret_mat[i][j].z);
             j++;
         }
         i++;
     }
 	return (ret_mat);
 }
-t_pnt3d    **rotationY(t_pnt3d matrix[3][4], t_uint32 length, t_uint32 width, float angle)
+t_pnt3d    **rotationY(t_pnt3d **matrix, t_uint32 length, t_uint32 width, float angle)
 {
     t_pnt3d **ret_mat;
 	/************ allocation ret_mat ****************/
@@ -94,15 +94,15 @@ t_pnt3d    **rotationY(t_pnt3d matrix[3][4], t_uint32 length, t_uint32 width, fl
     	return (ret_mat);
 }
 
-t_pnt3d    **rotationZ(t_pnt3d matrix[3][4], t_uint32 length, t_uint32 width, float angle)
+t_pnt3d    **rotationZ(t_pnt3d **matrix, t_uint32 length, t_uint32 width, float angle)
 {
     t_pnt3d **ret_mat;
 	/************ allocation ret_mat ****************/
 	int i = 0;
-	ret_mat = (t_pnt3d**)malloc(sizeof(t_pnt3d*) * 3);
-	while(i < 3)
+	ret_mat = (t_pnt3d**)malloc(sizeof(t_pnt3d*) * length);
+	while(i < length)
 	{
-		ret_mat[i] = (t_pnt3d*)malloc(sizeof(t_pnt3d) * 4);
+		ret_mat[i] = (t_pnt3d*)malloc(sizeof(t_pnt3d) * width);
 		i++;
 	}
 	/************************************************/
