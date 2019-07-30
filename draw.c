@@ -14,83 +14,36 @@
 #include <mlx.h>
 #include <stdio.h>
 
-void draw_line(void *mlx, void *win, t_pnt3d a, t_pnt3d b)
+void draw_line(void *mlx, void *win, t_pnt3d a, t_pnt3d b ,int color)
 {
-	int x0, x1, y0, y1;
+  	int dx;
+  	int dy;
+  	int sx;
+  	int sy; 
+  	int err;
+	int e2;
 
-	x0 = a.x;
-	x1 = b.x;
-	y0 = a.y;
-	y1 = b.y;
-  int dx = abs(x1-x0), sx = x0<x1 ? 1 : -1;
-  int dy = abs(y1-y0), sy = y0<y1 ? 1 : -1; 
-  int err = (dx>dy ? dx : -dy)/2, e2;
+	dx = labs(b.x - a.x);
+	dy = labs(b.y - a.y);
+	sx = a.x < b.x ? 1 : -1;
+	sy = a.y < b.y ? 1 : -1; 
+	err = (dx > dy ? dx : -dy)/2;
  
-  for(;;){
-    mlx_pixel_put(mlx, win, x0, y0, 0x00FFAA);
-    if (x0==x1 && y0==y1) break;
-    e2 = err;
-    if (e2 >-dx) { err -= dy; x0 += sx; }
-    if (e2 < dy) { err += dx; y0 += sy; }
-  }
-}
-
-/*void	draw_line(void *mlx_id, void *win_id, t_pnt3d a, t_pnt3d b)
-{
-	float ex = labs(b.x - a.x);
-	float ey = labs(b.y - a.y);
-	float dx = 2 * ex;
-	float dy = 2 * ey;
-
-	int xincr = 1;
-	int yincr = 1;
-
-	int i = 0;
-	int Dx = ex;
-	int Dy = ey;
-
-	//pour gerer 2 posibilite ds chaque cas
-	if (a.x > b.x)
-		xincr = -1;
-	if (a.y > b.y)
-		yincr = -1;
-	if(a.x == b.x)
-		xincr = 0;
-	if(a.y == b.y)
-		yincr = 0;
-	float y = a.y;
-
-	if(Dx < Dy) //1er cas
+  	while(1)
 	{
-		while (i <= Dy)
-		{
-			mlx_pixel_put(mlx_id, win_id, a.x, a.y, 0x00FFAA);
-			i++;
-			a.x = a.x + xincr; 
-			ex = ex - dy;
-			if(ex < 0)
-			{
-				a.y = a.y + yincr;
-				ex = ex + dx;
-			}
-		//printf ("\n%ld %ld",a.x,a.y);
+    	mlx_pixel_put(mlx, win, a.x, a.y, color);
+    	if (a.x==b.x && a.y==b.y)
+			break;
+	    e2 = err;
+   		if (e2 > -dx)
+		{ 
+			err -= dy;
+			a.x += sx;
 		}
-	}
-	else  //2eme cas (Dx >= Dy)
-	{
-		while (i <= Dx)
+	    if (e2 < dy)
 		{
-			mlx_pixel_put(mlx_id, win_id,a.x,a.y, 0x00FFAA);
-			i++;
-			a.y = a.y + yincr;
-			ey = ey - dx;
-			if(ey < 0)
-			{
-				a.x = a.x + xincr;
-				ey = ey + dy;
-			}
-		//printf ("\n%ld %ld",a.x,a.y);
+			err += dx; 
+			a.y += sy;
 		}
-	}
+  	}
 }
-*/

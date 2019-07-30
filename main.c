@@ -268,11 +268,12 @@
 const int win_length = 2000, win_width = 1000;
 const double depth = 1;
 
-// typedef struct s_env
-// {
-// 	void *mlx;
-// 	void *win;
-// }				t_env;
+ typedef struct s_env
+{
+	void *mlx;
+	void *win;
+	t_fdf_data *mat;
+}				t_env;
 
 // int	mouse_move(int x, int y, void *param)
 // {
@@ -282,6 +283,86 @@ const double depth = 1;
 // 	draw_line(env->mlx, env->win, (t_pnt3d){1000,500,0},(t_pnt3d){x,y,0});
 // 	return (0);
 // }
+long spacing = 100;
+long moveVerti = 100;
+long moveHoriz = 100;
+int key_press(int keycode, void *param)
+{
+	t_env *env;
+	env = param;
+	static long veti = 0;
+	static long hori = 0;
+	int i = 0;
+	int j;
+	if(keycode == 126 || keycode == 125 || keycode == 124 || keycode == 123)
+	{
+		while(i < env->mat->length)
+		{
+			j = 0;
+			while(j < env->mat->width)
+			{
+				if (j != (env->mat->width - 1))
+				draw_line(env->mlx, env->win, (t_pnt3d){env->mat->base[i][j].x+hori,env->mat->base[i][j].y+veti},(t_pnt3d){env->mat->base[i][j + 1].x+hori, env->mat->base[i][j + 1].y+veti},0x000000);	
+				if(i != (env->mat->length - 1))
+				draw_line(env->mlx, env->win, (t_pnt3d){env->mat->base[i][j].x+hori,env->mat->base[i][j].y+veti},(t_pnt3d){env->mat->base[i + 1][j].x+hori, env->mat->base[i + 1][j].y+veti},0x000000);
+				j++;
+			}
+			i++;
+		}
+		i = 0;
+		switch (keycode)
+		{
+			case 126:veti-=50;
+				break;
+			case 125:veti+=50;
+				break;
+			case 123:hori-=50;
+				break;
+			case 124:hori+=50;
+				break;
+		}		
+		while(i < env->mat->length)
+		{
+			j = 0;
+			while(j < env->mat->width)
+			{
+				if (j != (env->mat->width - 1))
+				draw_line(env->mlx, env->win, (t_pnt3d){env->mat->base[i][j].x+hori,env->mat->base[i][j].y+veti},(t_pnt3d){env->mat->base[i][j + 1].x+hori, env->mat->base[i][j + 1].y+veti},0xAAEEDD);	
+				if(i != (env->mat->length - 1))
+				draw_line(env->mlx, env->win, (t_pnt3d){env->mat->base[i][j].x+hori,env->mat->base[i][j].y+veti},(t_pnt3d){env->mat->base[i + 1][j].x+hori,env->mat->base[i + 1][j].y+veti}, 0xAAEEDD);
+				j++;
+			}
+			i++;
+		}
+		i = 0;
+	}
+	// if (keycode == 126)
+	// {
+	// 	draw_line(env->mlx, env->win, (t_pnt3d){env->p.x+hori,env->p.y+veti,env->p.z},(t_pnt3d){env->p.x+hori+3,env->p.y+veti,env->p.z},0x000000);
+	// 	veti-=30;
+	// 	draw_line(env->mlx, env->win, (t_pnt3d){env->p.x+hori,env->p.y+veti,env->p.z},(t_pnt3d){env->p.x+hori+3,env->p.y+veti,env->p.z},0xFFADAA);	
+	// }
+	// if (keycode == 125)	
+	// {
+	// 	draw_line(env->mlx, env->win, (t_pnt3d){env->p.x+hori,env->p.y+veti,env->p.z},(t_pnt3d){env->p.x+hori+3,env->p.y+veti,env->p.z},0x000000);
+	// 	veti+=30;
+	// 	draw_line(env->mlx, env->win, (t_pnt3d){env->p.x+hori,env->p.y+veti,env->p.z},(t_pnt3d){env->p.x+hori+3,env->p.y+veti,env->p.z},0xFFADAA);	
+	// }
+	// if (keycode == 123)	
+	// {
+	// 	draw_line(env->mlx, env->win, (t_pnt3d){env->p.x+hori,env->p.y+veti,env->p.z},(t_pnt3d){env->p.x+hori+3,env->p.y+veti,env->p.z},0x000000);
+	// 	hori-=30;
+	// 	draw_line(env->mlx, env->win, (t_pnt3d){env->p.x+hori,env->p.y+veti,env->p.z},(t_pnt3d){env->p.x+hori+3,env->p.y+veti,env->p.z},0xFFADAA);	
+	// }
+	// if (keycode == 124)	
+	// {
+	// 	draw_line(env->mlx, env->win, (t_pnt3d){env->p.x+hori,env->p.y+veti,env->p.z},(t_pnt3d){env->p.x+hori+3,env->p.y+veti,env->p.z},0x000000);
+	// 	hori+=30;
+	// 	draw_line(env->mlx, env->win, (t_pnt3d){env->p.x+hori,env->p.y+veti,env->p.z},(t_pnt3d){env->p.x+hori+3,env->p.y+veti,env->p.z},0xFFADAA);	
+	// }
+
+	return(0);
+}
 
 int main(int argc, char *argv[])
 {
@@ -289,7 +370,8 @@ int main(int argc, char *argv[])
 	int fd = open(argv[1],O_RDONLY);
 	rec = fdf_read(fd);
 	t_pnt3d **tablo = rec->base;
-
+	
+	
 // int t = 0;
 // int s;
 // 	while (t < rec->length)
@@ -308,10 +390,10 @@ int main(int argc, char *argv[])
 
 	const t_uint32 length = 4, width = 8;
 	t_pnt3d points[length][width] = {
-		{{0, 0, 0} ,{1, 0 ,0} ,{2, 0 ,0} ,{3, 0 ,0} ,{4 ,0 ,0} ,{5 ,0 ,1} ,{6 ,0 ,2} ,{7 ,0 ,3} },
-		{{0, 1, 0} ,{1, 1 ,0} ,{2, 1 ,0} ,{3 ,1, 1} ,{4, 1 ,0} ,{5, 1, 0} ,{6 ,1 ,3} ,{7, 1 ,2} },
-		{{0 ,2 ,0} ,{1 ,2 ,0} ,{2, 2, 0} ,{3, 2 ,0} ,{4, 2, 0} ,{5 ,2, 0} ,{6, 2 ,0} ,{7, 2 ,0} },
-		{{0, 3 ,2} ,{1 ,3 ,2} ,{2 ,3, 2} ,{3, 3, 2} ,{4 ,3, 0} ,{5 ,3, 2} ,{6, 3, 2} ,{7, 3, 2} }
+		{{0+0*spacing+moveHoriz, 0+0*spacing+moveVerti, 0} ,{1+1*spacing+moveHoriz, 0+0*spacing+moveVerti ,0} ,{2+2*spacing+moveHoriz, 0+0*spacing+moveVerti ,0} ,{3+3*spacing+moveHoriz, 0+0*spacing+moveVerti ,0} ,{4+4*spacing+moveHoriz ,0+0*spacing+moveVerti ,0} ,{5+5*spacing+moveHoriz ,0+0*spacing+moveVerti ,1} ,{6+6*spacing+moveHoriz ,0+0*spacing+moveVerti ,2} ,{7+7*spacing+moveHoriz ,0+0*spacing+moveVerti ,3} },
+		{{0+0*spacing+moveHoriz, 1+1*spacing+moveVerti, 0} ,{1+1*spacing+moveHoriz, 1+1*spacing+moveVerti ,0} ,{2+2*spacing+moveHoriz, 1+1*spacing+moveVerti ,0} ,{3+3*spacing+moveHoriz ,1+1*spacing+moveVerti, 1} ,{4+4*spacing+moveHoriz, 1+1*spacing+moveVerti ,0} ,{5+5*spacing+moveHoriz, 1+1*spacing+moveVerti, 0} ,{6+6*spacing+moveHoriz ,1+1*spacing+moveVerti ,3} ,{7+7*spacing+moveHoriz, 1+1*spacing+moveVerti ,2} },
+		{{0+0*spacing+moveHoriz ,2+2*spacing+moveVerti ,0} ,{1+1*spacing+moveHoriz ,2+2*spacing+moveVerti ,0} ,{2+2*spacing+moveHoriz, 2+2*spacing+moveVerti, 0} ,{3+3*spacing+moveHoriz, 2+2*spacing+moveVerti ,0} ,{4+4*spacing+moveHoriz, 2+2*spacing+moveVerti, 0} ,{5+5*spacing+moveHoriz ,2+2*spacing+moveVerti, 0} ,{6+6*spacing+moveHoriz, 2+2*spacing+moveVerti ,0} ,{7+7*spacing+moveHoriz, 2+2*spacing+moveVerti ,0} },
+		{{0+0*spacing+moveHoriz, 3+3*spacing+moveVerti ,2} ,{1+1*spacing+moveHoriz ,3+3*spacing+moveVerti ,2} ,{2+2*spacing+moveHoriz ,3+3*spacing+moveVerti, 2} ,{3+3*spacing+moveHoriz, 3+3*spacing+moveVerti, 2} ,{4+4*spacing+moveHoriz ,3+3*spacing+moveVerti, 0} ,{5+5*spacing+moveHoriz ,3+3*spacing+moveVerti, 2} ,{6+6*spacing+moveHoriz, 3+3*spacing+moveVerti, 2} ,{7+7*spacing+moveHoriz, 3+3*spacing+moveVerti, 2} }
 									};
 	t_pnt3d **resX,**resY,**resZ,**restabloZ;
 	//t_pnt3d *tab;
@@ -321,9 +403,10 @@ int main(int argc, char *argv[])
                               {0,sin(angle),cos(angle)}};
 	int i = 0;
 	int j = 0;
-	//t_env 	env;
+	t_env 	env;
 	t_pnt3d pn;
 	t_pnt3d pm;
+
 	
 	//resX = rotationX(points, length, width , angle);
 	//resY = rotationY(points, length, width , angle);
@@ -357,9 +440,13 @@ int main(int argc, char *argv[])
 	mlx_id = mlx_init();
 	win_id = mlx_new_window(mlx_id, win_length, win_width, "FDF");
 
-	// env.win = win_id;
-	// env.mlx = mlx_id;
 	
+	env.win = win_id;
+	env.mlx = mlx_id;
+	env.mat = rec;
+	// env.p.x = 1000;
+	// env.p.y = 500;
+	// env.p.z = 0;
 
 	/* do_draw_2d_plan(mlx_id, win_id, origin_2d); */
 	/* do_draw_2d_line(mlx_id, win_id, origin_2d, head, tail); */
@@ -424,23 +511,23 @@ int main(int argc, char *argv[])
 	// }
 	// i = 0; 
 	//printf("%d %d",rec->length,rec->width);
-	while (i < rec->length)
-	{
-		j = 0;
-		while (j < rec->width) 
-		{
-			if (j != (width - 1))
-			draw_line(mlx_id, win_id, tablo[i][j],tablo[i][j + 1]);
-			// if (i != 0)
-			// draw_line(mlx_id, win_id, tablo[i][j],tablo[i - 1][j]);
-			// if (j != 0)
-			// draw_line(mlx_id, win_id, tablo[i][j],tablo[i][j - 1]);
-			if(i != (rec->length - 1))
-			draw_line(mlx_id, win_id, tablo[i][j],tablo[i + 1][j]);
-			j++;
-		}
-		i++;
-	}
+	// while (i < rec->length)
+	// {
+	// 	j = 0;
+	// 	while (j < rec->width) 
+	// 	{
+	// 		if (j != (width - 1))
+	// 		draw_line(mlx_id, win_id, tablo[i][j],tablo[i][j + 1]);
+	// 		// if (i != 0)
+	// 		// draw_line(mlx_id, win_id, tablo[i][j],tablo[i - 1][j]);
+	// 		// if (j != 0)
+	// 		// draw_line(mlx_id, win_id, tablo[i][j],tablo[i][j - 1]);
+	// 		if(i != (rec->length - 1))
+	// 		draw_line(mlx_id, win_id, tablo[i][j],tablo[i + 1][j]);
+	// 		j++;
+	// 	}
+	// 	i++;
+	// }
 	// while (i < 4)
 	// {
 	// 	j = 0;
@@ -472,7 +559,7 @@ int main(int argc, char *argv[])
 
 
 	//mlx_hook(win_id, 6, 0, &mouse_move, &env);
-
+	mlx_hook(win_id, 2, 0, &key_press , &env);
 	mlx_loop(mlx_id);
 	mlx_clear_window(mlx_id, win_id);
 	mlx_destroy_window(mlx_id, win_id);
