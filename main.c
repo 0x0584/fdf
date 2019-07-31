@@ -290,11 +290,12 @@ int key_press(int keycode, void *param)
 {
 	t_env *env;
 	env = param;
-	static long veti = 0;
-	static long hori = 0;
+	static long space = 100;
+	static long veti = 100;
+	static long hori = 100;
 	int i = 0;
 	int j;
-	if(keycode == 126 || keycode == 125 || keycode == 124 || keycode == 123)
+	if(keycode == 126 || keycode == 125 || keycode == 124 || keycode == 123 || keycode == 69 || keycode == 78)
 	{
 		while(i < env->mat->length)
 		{
@@ -302,9 +303,9 @@ int key_press(int keycode, void *param)
 			while(j < env->mat->width)
 			{
 				if (j != (env->mat->width - 1))
-				draw_line(env->mlx, env->win, (t_pnt3d){env->mat->base[i][j].x+hori,env->mat->base[i][j].y+veti},(t_pnt3d){env->mat->base[i][j + 1].x+hori, env->mat->base[i][j + 1].y+veti},0x000000);	
+				draw_line(env->mlx, env->win, (t_pnt3d){env->mat->base[i][j].x+space*j+hori,env->mat->base[i][j].y+space*i+veti},(t_pnt3d){env->mat->base[i][j + 1].x+space*(j+1)+hori, env->mat->base[i][j + 1].y+space*i+veti},0x000000);	
 				if(i != (env->mat->length - 1))
-				draw_line(env->mlx, env->win, (t_pnt3d){env->mat->base[i][j].x+hori,env->mat->base[i][j].y+veti},(t_pnt3d){env->mat->base[i + 1][j].x+hori, env->mat->base[i + 1][j].y+veti},0x000000);
+				draw_line(env->mlx, env->win, (t_pnt3d){env->mat->base[i][j].x+space*j+hori,env->mat->base[i][j].y+space*i+veti},(t_pnt3d){env->mat->base[i + 1][j].x+space*j+hori, env->mat->base[i + 1][j].y+space*(i+1)+veti},0x000000);
 				j++;
 			}
 			i++;
@@ -312,13 +313,17 @@ int key_press(int keycode, void *param)
 		i = 0;
 		switch (keycode)
 		{
-			case 126:veti-=50;
+			case 126:veti-=10;
 				break;
-			case 125:veti+=50;
+			case 125:veti+=10;
 				break;
-			case 123:hori-=50;
+			case 123:hori-=10;
 				break;
-			case 124:hori+=50;
+			case 124:hori+=10;
+				break;
+			case 69:space+=10;
+				break;
+			case 78:space-=10;
 				break;
 		}		
 		while(i < env->mat->length)
@@ -327,9 +332,9 @@ int key_press(int keycode, void *param)
 			while(j < env->mat->width)
 			{
 				if (j != (env->mat->width - 1))
-				draw_line(env->mlx, env->win, (t_pnt3d){env->mat->base[i][j].x+hori,env->mat->base[i][j].y+veti},(t_pnt3d){env->mat->base[i][j + 1].x+hori, env->mat->base[i][j + 1].y+veti},0xAAEEDD);	
+				draw_line(env->mlx, env->win, (t_pnt3d){env->mat->base[i][j].x+space*j+hori,env->mat->base[i][j].y+space*i+veti},(t_pnt3d){env->mat->base[i][j + 1].x+space*(j+1)+hori, env->mat->base[i][j + 1].y+space*i+veti}, 0xAAEEDD);	
 				if(i != (env->mat->length - 1))
-				draw_line(env->mlx, env->win, (t_pnt3d){env->mat->base[i][j].x+hori,env->mat->base[i][j].y+veti},(t_pnt3d){env->mat->base[i + 1][j].x+hori,env->mat->base[i + 1][j].y+veti}, 0xAAEEDD);
+				draw_line(env->mlx, env->win, (t_pnt3d){env->mat->base[i][j].x+space*j+hori,env->mat->base[i][j].y+space*i+veti},(t_pnt3d){env->mat->base[i + 1][j].x+space*j+hori, env->mat->base[i + 1][j].y+space*(i+1)+veti}, 0xAAEEDD);
 				j++;
 			}
 			i++;
@@ -511,19 +516,20 @@ int main(int argc, char *argv[])
 	// }
 	// i = 0; 
 	//printf("%d %d",rec->length,rec->width);
+	// long sp =50;
 	// while (i < rec->length)
 	// {
 	// 	j = 0;
 	// 	while (j < rec->width) 
 	// 	{
-	// 		if (j != (width - 1))
-	// 		draw_line(mlx_id, win_id, tablo[i][j],tablo[i][j + 1]);
+	// 		if (j != (rec->width - 1))
+	// 		draw_line(mlx_id, win_id, (t_pnt3d){j+sp*j,i+sp*i},(t_pnt3d){j+sp*(j+1),i+sp*i},0xcccccc);
 	// 		// if (i != 0)
-	// 		// draw_line(mlx_id, win_id, tablo[i][j],tablo[i - 1][j]);
+	// 		// draw_line(mlx_id, win_id, ij,i - 1j);
 	// 		// if (j != 0)
-	// 		// draw_line(mlx_id, win_id, tablo[i][j],tablo[i][j - 1]);
+	// 		// draw_line(mlx_id, win_id, ij,ij - 1);
 	// 		if(i != (rec->length - 1))
-	// 		draw_line(mlx_id, win_id, tablo[i][j],tablo[i + 1][j]);
+	// 		draw_line(mlx_id, win_id, (t_pnt3d){j+sp*j,i+sp*i},(t_pnt3d){j+sp*j,i+sp*(i+1)},0xcccccc);
 	// 		j++;
 	// 	}
 	// 	i++;
@@ -534,13 +540,13 @@ int main(int argc, char *argv[])
 	// 	while (j < 8) 
 	// 	{
 	// 		if (j != (width - 1))
-	// 		draw_line(mlx_id, win_id, points[i][j],points[i][j + 1]);
+	// 		draw_line(mlx_id, win_id, points[i][j],points[i][j + 1],0xdddddd);
 	// 		// if (i != 0)
 	// 		// draw_line(mlx_id, win_id, points[i][j],points[i - 1][j]);
 	// 		// if (j != 0)
 	// 		// draw_line(mlx_id, win_id, points[i][j],points[i][j - 1]);
 	// 		if(i != (rec->length - 1))
-	// 		draw_line(mlx_id, win_id, points[i][j],points[i + 1][j]);
+	// 		draw_line(mlx_id, win_id, points[i][j],points[i + 1][j],0xdddddd);
 	// 		j++;
 	// 	}
 	// 	i++;
