@@ -388,12 +388,13 @@ int main(int argc, char *argv[])
 	int tol = data->length;
 	int ard = data->width;
 	t_pnt3d **tab_red = redim(tablo,tol,ard,13,100,50);
-	t_pnt3d	**restabloX = rotationX(tab_red, tol, ard , 0);
+	t_pnt3d	**restabloX = rotationX(tab_red, tol, ard , -0.2);
 	//t_pnt3d **restabloY = rotationY(restabloX, tol, ard , angle);
 	t_pnt3d **restabloZ = rotationZ(restabloX, tol, ard , -0.5);
 	t_pnt2d **f = projestion(restabloZ ,tol, ard, 'i');
 	
-	
+
+
 // int t = 0;
 // int s;
 // 	while (t < rec->length)
