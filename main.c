@@ -265,7 +265,7 @@
 // 	}
 // }
 
-const int win_length = 2000, win_width = 1000;
+const int win_length = 500, win_width = 500;
 const double depth = 1;
 
  typedef struct s_env
@@ -283,98 +283,115 @@ const double depth = 1;
 // 	draw_line(env->mlx, env->win, (t_pnt3d){1000,500,0},(t_pnt3d){x,y,0});
 // 	return (0);
 // }
-long spacing = 100;
-long moveVerti = 100;
-long moveHoriz = 100;
-int key_press(int keycode, void *param)
-{
-	t_env *env;
-	env = param;
-	static long space = 100;
-	static long veti = 100;
-	static long hori = 100;
-	int i = 0;
-	int j;
-	if(keycode == 126 || keycode == 125 || keycode == 124 || keycode == 123 || keycode == 69 || keycode == 78)
-	{
-		while(i < env->mat->length)
-		{
-			j = 0;
-			while(j < env->mat->width)
-			{
-				if (j != (env->mat->width - 1))
-				draw_line(env->mlx, env->win, (t_pnt3d){env->mat->base[i][j].x+space*j+hori,env->mat->base[i][j].y+space*i+veti},(t_pnt3d){env->mat->base[i][j + 1].x+space*(j+1)+hori, env->mat->base[i][j + 1].y+space*i+veti},0x000000);	
-				if(i != (env->mat->length - 1))
-				draw_line(env->mlx, env->win, (t_pnt3d){env->mat->base[i][j].x+space*j+hori,env->mat->base[i][j].y+space*i+veti},(t_pnt3d){env->mat->base[i + 1][j].x+space*j+hori, env->mat->base[i + 1][j].y+space*(i+1)+veti},0x000000);
-				j++;
-			}
-			i++;
-		}
-		i = 0;
-		switch (keycode)
-		{
-			case 126:veti-=10;
-				break;
-			case 125:veti+=10;
-				break;
-			case 123:hori-=10;
-				break;
-			case 124:hori+=10;
-				break;
-			case 69:space+=10;
-				break;
-			case 78:space-=10;
-				break;
-		}		
-		while(i < env->mat->length)
-		{
-			j = 0;
-			while(j < env->mat->width)
-			{
-				if (j != (env->mat->width - 1))
-				draw_line(env->mlx, env->win, (t_pnt3d){env->mat->base[i][j].x+space*j+hori,env->mat->base[i][j].y+space*i+veti},(t_pnt3d){env->mat->base[i][j + 1].x+space*(j+1)+hori, env->mat->base[i][j + 1].y+space*i+veti}, 0xAAEEDD);	
-				if(i != (env->mat->length - 1))
-				draw_line(env->mlx, env->win, (t_pnt3d){env->mat->base[i][j].x+space*j+hori,env->mat->base[i][j].y+space*i+veti},(t_pnt3d){env->mat->base[i + 1][j].x+space*j+hori, env->mat->base[i + 1][j].y+space*(i+1)+veti}, 0xAAEEDD);
-				j++;
-			}
-			i++;
-		}
-		i = 0;
-	}
-	// if (keycode == 126)
-	// {
-	// 	draw_line(env->mlx, env->win, (t_pnt3d){env->p.x+hori,env->p.y+veti,env->p.z},(t_pnt3d){env->p.x+hori+3,env->p.y+veti,env->p.z},0x000000);
-	// 	veti-=30;
-	// 	draw_line(env->mlx, env->win, (t_pnt3d){env->p.x+hori,env->p.y+veti,env->p.z},(t_pnt3d){env->p.x+hori+3,env->p.y+veti,env->p.z},0xFFADAA);	
+long spacing = 50;
+long moveVerti = 50;
+long moveHoriz = 50;
+// int key_press(int keycode, void *param)
+// {
+// 	t_env *env;
+// 	env = param;
+// 	static long space = 100;
+// 	static long veti = 0;
+// 	static long hori = 0;
+// 	int i = 0;
+// 	int j;
+// 	if(keycode == 126 || keycode == 125 || keycode == 124 || keycode == 123 || keycode == 69 || keycode == 78)
+// 	{
+		// while(i < env->mat->length)
+		// {
+		// 	j = 0;
+		// 	while(j < env->mat->width)
+		// 	{
+		// 		if (j != (env->mat->width - 1))
+		// 		draw_line(env->mlx, env->win, (t_pnt3d){env->mat->base[i][j].x+space*j+hori,env->mat->base[i][j].y+space*i+veti},(t_pnt3d){env->mat->base[i][j + 1].x+space*(j+1)+hori, env->mat->base[i][j + 1].y+space*i+veti},0x000000);	
+		// 		if(i != (env->mat->length - 1))
+		// 		draw_line(env->mlx, env->win, (t_pnt3d){env->mat->base[i][j].x+space*j+hori,env->mat->base[i][j].y+space*i+veti},(t_pnt3d){env->mat->base[i + 1][j].x+space*j+hori, env->mat->base[i + 1][j].y+space*(i+1)+veti},0x000000);
+		// 		j++;
+		// 	}
+		// 	i++;
+		// }
+	// 	i = 0;
+	// 	switch (keycode)
+	// 	{
+	// 		case 126:veti-=10;
+	// 			break;
+	// 		case 125:veti+=10;
+	// 			break;
+	// 		case 123:hori-=10;
+	// 			break;
+	// 		case 124:hori+=10;
+	// 			break;
+	// 		case 69:space+=10;
+	// 			break;
+	// 		case 78:space-=10;
+	// 			break;
+	// 	}		
+	// 	while(i < env->mat->length)
+	// 	{
+	// 		j = 0;
+	// 		while(j < env->mat->width)
+	// 		{
+	// 			if (j != (env->mat->width - 1))
+	// 			draw_line(env->mlx, env->win, (t_pnt3d){env->mat->base[i][j].x+space*j+hori,env->mat->base[i][j].y+space*i+veti},(t_pnt3d){env->mat->base[i][j + 1].x+space*(j+1)+hori, env->mat->base[i][j + 1].y+space*i+veti}, 0xAAEEDD);	
+	// 			if(i != (env->mat->length - 1))
+	// 			draw_line(env->mlx, env->win, (t_pnt3d){env->mat->base[i][j].x+space*j+hori,env->mat->base[i][j].y+space*i+veti},(t_pnt3d){env->mat->base[i + 1][j].x+space*j+hori, env->mat->base[i + 1][j].y+space*(i+1)+veti}, 0xAAEEDD);
+	// 			j++;
+	// 		}
+	// 		i++;
+	// 	}
+	// 	i = 0;
 	// }
-	// if (keycode == 125)	
-	// {
-	// 	draw_line(env->mlx, env->win, (t_pnt3d){env->p.x+hori,env->p.y+veti,env->p.z},(t_pnt3d){env->p.x+hori+3,env->p.y+veti,env->p.z},0x000000);
-	// 	veti+=30;
-	// 	draw_line(env->mlx, env->win, (t_pnt3d){env->p.x+hori,env->p.y+veti,env->p.z},(t_pnt3d){env->p.x+hori+3,env->p.y+veti,env->p.z},0xFFADAA);	
-	// }
-	// if (keycode == 123)	
-	// {
-	// 	draw_line(env->mlx, env->win, (t_pnt3d){env->p.x+hori,env->p.y+veti,env->p.z},(t_pnt3d){env->p.x+hori+3,env->p.y+veti,env->p.z},0x000000);
-	// 	hori-=30;
-	// 	draw_line(env->mlx, env->win, (t_pnt3d){env->p.x+hori,env->p.y+veti,env->p.z},(t_pnt3d){env->p.x+hori+3,env->p.y+veti,env->p.z},0xFFADAA);	
-	// }
-	// if (keycode == 124)	
-	// {
-	// 	draw_line(env->mlx, env->win, (t_pnt3d){env->p.x+hori,env->p.y+veti,env->p.z},(t_pnt3d){env->p.x+hori+3,env->p.y+veti,env->p.z},0x000000);
-	// 	hori+=30;
-	// 	draw_line(env->mlx, env->win, (t_pnt3d){env->p.x+hori,env->p.y+veti,env->p.z},(t_pnt3d){env->p.x+hori+3,env->p.y+veti,env->p.z},0xFFADAA);	
-	// }
+// 	// if (keycode == 126)
+// 	// {
+// 	// 	draw_line(env->mlx, env->win, (t_pnt3d){env->p.x+hori,env->p.y+veti,env->p.z},(t_pnt3d){env->p.x+hori+3,env->p.y+veti,env->p.z},0x000000);
+// 	// 	veti-=30;
+// 	// 	draw_line(env->mlx, env->win, (t_pnt3d){env->p.x+hori,env->p.y+veti,env->p.z},(t_pnt3d){env->p.x+hori+3,env->p.y+veti,env->p.z},0xFFADAA);	
+// 	// }
+// 	// if (keycode == 125)	
+// 	// {
+// 	// 	draw_line(env->mlx, env->win, (t_pnt3d){env->p.x+hori,env->p.y+veti,env->p.z},(t_pnt3d){env->p.x+hori+3,env->p.y+veti,env->p.z},0x000000);
+// 	// 	veti+=30;
+// 	// 	draw_line(env->mlx, env->win, (t_pnt3d){env->p.x+hori,env->p.y+veti,env->p.z},(t_pnt3d){env->p.x+hori+3,env->p.y+veti,env->p.z},0xFFADAA);	
+// 	// }
+// 	// if (keycode == 123)	
+// 	// {
+// 	// 	draw_line(env->mlx, env->win, (t_pnt3d){env->p.x+hori,env->p.y+veti,env->p.z},(t_pnt3d){env->p.x+hori+3,env->p.y+veti,env->p.z},0x000000);
+// 	// 	hori-=30;
+// 	// 	draw_line(env->mlx, env->win, (t_pnt3d){env->p.x+hori,env->p.y+veti,env->p.z},(t_pnt3d){env->p.x+hori+3,env->p.y+veti,env->p.z},0xFFADAA);	
+// 	// }
+// 	// if (keycode == 124)	
+// 	// {
+// 	// 	draw_line(env->mlx, env->win, (t_pnt3d){env->p.x+hori,env->p.y+veti,env->p.z},(t_pnt3d){env->p.x+hori+3,env->p.y+veti,env->p.z},0x000000);
+// 	// 	hori+=30;
+// 	// 	draw_line(env->mlx, env->win, (t_pnt3d){env->p.x+hori,env->p.y+veti,env->p.z},(t_pnt3d){env->p.x+hori+3,env->p.y+veti,env->p.z},0xFFADAA);	
+// 	// }
 
-	return(0);
-}
+// 	return(0);
+// }
 
 int main(int argc, char *argv[])
 {
-	t_fdf_data *rec;
+	t_pnt3d points[4][8] = {
+		{{0+0*spacing+moveHoriz, 0+0*spacing+moveVerti, 0} ,{1+1*spacing+moveHoriz, 0+0*spacing+moveVerti ,0} ,{2+2*spacing+moveHoriz, 0+0*spacing+moveVerti ,0} ,{3+3*spacing+moveHoriz, 0+0*spacing+moveVerti ,0} ,{4+4*spacing+moveHoriz ,0+0*spacing+moveVerti ,0} ,{5+5*spacing+moveHoriz ,0+0*spacing+moveVerti ,1} ,{6+6*spacing+moveHoriz ,0+0*spacing+moveVerti ,2} ,{7+7*spacing+moveHoriz ,0+0*spacing+moveVerti ,3} },
+		{{0+0*spacing+moveHoriz, 1+1*spacing+moveVerti, 0} ,{1+1*spacing+moveHoriz, 1+1*spacing+moveVerti ,0} ,{2+2*spacing+moveHoriz, 1+1*spacing+moveVerti ,0} ,{3+3*spacing+moveHoriz ,1+1*spacing+moveVerti, 1} ,{4+4*spacing+moveHoriz, 1+1*spacing+moveVerti ,0} ,{5+5*spacing+moveHoriz, 1+1*spacing+moveVerti, 0} ,{6+6*spacing+moveHoriz ,1+1*spacing+moveVerti ,3} ,{7+7*spacing+moveHoriz, 1+1*spacing+moveVerti ,2} },
+		{{0+0*spacing+moveHoriz ,2+2*spacing+moveVerti ,0} ,{1+1*spacing+moveHoriz ,2+2*spacing+moveVerti ,0} ,{2+2*spacing+moveHoriz, 2+2*spacing+moveVerti, 0} ,{3+3*spacing+moveHoriz, 2+2*spacing+moveVerti ,0} ,{4+4*spacing+moveHoriz, 2+2*spacing+moveVerti, 0} ,{5+5*spacing+moveHoriz ,2+2*spacing+moveVerti, 0} ,{6+6*spacing+moveHoriz, 2+2*spacing+moveVerti ,0} ,{7+7*spacing+moveHoriz, 2+2*spacing+moveVerti ,0} },
+		{{0+0*spacing+moveHoriz, 3+3*spacing+moveVerti ,12} ,{1+1*spacing+moveHoriz ,3+3*spacing+moveVerti ,12} ,{2+2*spacing+moveHoriz ,3+3*spacing+moveVerti, 12} ,{3+3*spacing+moveHoriz, 3+3*spacing+moveVerti, 12} ,{4+4*spacing+moveHoriz ,3+3*spacing+moveVerti, 0} ,{5+5*spacing+moveHoriz ,3+3*spacing+moveVerti, 2} ,{6+6*spacing+moveHoriz, 3+3*spacing+moveVerti, 2} ,{7+7*spacing+moveHoriz, 3+3*spacing+moveVerti, 2} }
+									};
+	const t_uint32 length = 4, width = 8;
+	float angle = 0.3;
+	t_fdf_data	*data;
+	t_fdf_data2 *rec;
 	int fd = open(argv[1],O_RDONLY);
-	rec = fdf_read(fd);
-	t_pnt3d **tablo = rec->base;
+	data = fdf_read(fd);
+
+	t_pnt3d **tablo = data->base;
+	int tol = data->length;
+	int ard = data->width;
+	t_pnt3d **tab_red = redim(tablo,tol,ard,13,100,50);
+	t_pnt3d	**restabloX = rotationX(tab_red, tol, ard , 0);
+	//t_pnt3d **restabloY = rotationY(restabloX, tol, ard , angle);
+	t_pnt3d **restabloZ = rotationZ(restabloX, tol, ard , -0.5);
+	t_pnt2d **f = projestion(restabloZ ,tol, ard, 'i');
 	
 	
 // int t = 0;
@@ -393,46 +410,19 @@ int main(int argc, char *argv[])
 // 		t++;
 // 	}
 
-	const t_uint32 length = 4, width = 8;
-	t_pnt3d points[length][width] = {
-		{{0+0*spacing+moveHoriz, 0+0*spacing+moveVerti, 0} ,{1+1*spacing+moveHoriz, 0+0*spacing+moveVerti ,0} ,{2+2*spacing+moveHoriz, 0+0*spacing+moveVerti ,0} ,{3+3*spacing+moveHoriz, 0+0*spacing+moveVerti ,0} ,{4+4*spacing+moveHoriz ,0+0*spacing+moveVerti ,0} ,{5+5*spacing+moveHoriz ,0+0*spacing+moveVerti ,1} ,{6+6*spacing+moveHoriz ,0+0*spacing+moveVerti ,2} ,{7+7*spacing+moveHoriz ,0+0*spacing+moveVerti ,3} },
-		{{0+0*spacing+moveHoriz, 1+1*spacing+moveVerti, 0} ,{1+1*spacing+moveHoriz, 1+1*spacing+moveVerti ,0} ,{2+2*spacing+moveHoriz, 1+1*spacing+moveVerti ,0} ,{3+3*spacing+moveHoriz ,1+1*spacing+moveVerti, 1} ,{4+4*spacing+moveHoriz, 1+1*spacing+moveVerti ,0} ,{5+5*spacing+moveHoriz, 1+1*spacing+moveVerti, 0} ,{6+6*spacing+moveHoriz ,1+1*spacing+moveVerti ,3} ,{7+7*spacing+moveHoriz, 1+1*spacing+moveVerti ,2} },
-		{{0+0*spacing+moveHoriz ,2+2*spacing+moveVerti ,0} ,{1+1*spacing+moveHoriz ,2+2*spacing+moveVerti ,0} ,{2+2*spacing+moveHoriz, 2+2*spacing+moveVerti, 0} ,{3+3*spacing+moveHoriz, 2+2*spacing+moveVerti ,0} ,{4+4*spacing+moveHoriz, 2+2*spacing+moveVerti, 0} ,{5+5*spacing+moveHoriz ,2+2*spacing+moveVerti, 0} ,{6+6*spacing+moveHoriz, 2+2*spacing+moveVerti ,0} ,{7+7*spacing+moveHoriz, 2+2*spacing+moveVerti ,0} },
-		{{0+0*spacing+moveHoriz, 3+3*spacing+moveVerti ,2} ,{1+1*spacing+moveHoriz ,3+3*spacing+moveVerti ,2} ,{2+2*spacing+moveHoriz ,3+3*spacing+moveVerti, 2} ,{3+3*spacing+moveHoriz, 3+3*spacing+moveVerti, 2} ,{4+4*spacing+moveHoriz ,3+3*spacing+moveVerti, 0} ,{5+5*spacing+moveHoriz ,3+3*spacing+moveVerti, 2} ,{6+6*spacing+moveHoriz, 3+3*spacing+moveVerti, 2} ,{7+7*spacing+moveHoriz, 3+3*spacing+moveVerti, 2} }
-									};
-	t_pnt3d **resX,**resY,**resZ,**restabloZ;
+	t_pnt3d **resX,**resY,**resZ;
 	//t_pnt3d *tab;
-	float angle = 0.5;
-	float rot_matrix_x[3][3] = {{1,0,0},
-                              {0,cos(angle),-sin(angle)},
-                              {0,sin(angle),cos(angle)}};
 	int i = 0;
 	int j = 0;
 	t_env 	env;
-	t_pnt3d pn;
-	t_pnt3d pm;
+	// t_pnt3d pn;
+	// t_pnt3d pm;
 
 	
 	//resX = rotationX(points, length, width , angle);
 	//resY = rotationY(points, length, width , angle);
 	//resZ = rotationZ(points, length, width , angle);
-	restabloZ = rotationZ(tablo, length, width , angle);
 
-	//printf ("\n+++%ld++++",res[0][0].y);
-	// printf("%ld %ld %ld\n",points[0][0].x, points[0][0].y, points[0][0].z);
-	// pn = produit_matrix( points[0][0],  rot_matrix_x);
-	// printf("%ld %ld %ld\n",pn.x, pn.y, pn.z);
-
-
-	// t_pnt2d a,b,c,d,m,n,k,h; 
-	// a.x =150 ; a.y = 150;
-	// b.x = 150 ; b.y = 350;
-	// c.x =150 ; c.y = 350;
-	// d.x = 350 ; d.y = 350;
-	// m.x =350 ; m.y = 350;
-	// n.x = 350 ; n.y = 150;
-	// k.x =350 ; k.y = 150;
-	// h.x = 150 ; h.y = 150;
 
 	//do_read_fdf_test(argc,argv); 
 	 //do_mlx_test(); 
@@ -446,12 +436,9 @@ int main(int argc, char *argv[])
 	win_id = mlx_new_window(mlx_id, win_length, win_width, "FDF");
 
 	
-	env.win = win_id;
-	env.mlx = mlx_id;
-	env.mat = rec;
-	// env.p.x = 1000;
-	// env.p.y = 500;
-	// env.p.z = 0;
+	// env.win = win_id;
+	// env.mlx = mlx_id;
+	// env.mat = data;
 
 	/* do_draw_2d_plan(mlx_id, win_id, origin_2d); */
 	/* do_draw_2d_line(mlx_id, win_id, origin_2d, head, tail); */
@@ -459,7 +446,6 @@ int main(int argc, char *argv[])
 
 	// rotationX(points, length, width , angle);
 	// printf("%ld %ld %ld",points[0][0].x, points[0][0].y, points[0][0].z);
-	// printf("\n%f",cos(0.5));
 
 	// while (i < rec->length)
 	// {
@@ -496,61 +482,61 @@ int main(int argc, char *argv[])
 	// 	}
 	// 	i++;
 	// }
-	// while (i < rec->length)
+	// while (i < 4)
 	// {
 	// 	j = 0;
-	// 	while (j < rec->width) 
+	// 	while (j < 8) 
 	// 	{
-	// 		mlx_pixel_put(mlx_id, win_id, restabloZ[i][j].x, restabloZ[i][j].y, 0xFF00FF);
-	// 		if (j != (rec->width - 1))
-	// 			draw_line(mlx_id, win_id, restabloZ[i][j],restabloZ[i][j + 1]);
+	// 		//mlx_pixel_put(mlx_id, win_id, restabloZ[i][j].x, restabloZ[i][j].y, 0xFF00FF);
+	// 		if (j != (7))
+	// 			draw_line(mlx_id, win_id, restabloZ[i][j],restabloZ[i][j + 1],0xabcdef);
 	// 		// if (i != 0)
 	// 		// draw_line(mlx_id, win_id, restabloZ[i][j],restabloZ[i - 1][j]);
 	// 		// if (j != 0)
 	// 		// draw_line(mlx_id, win_id, restabloZ[i][j],restabloZ[i][j - 1]);
-	// 		if(i != (rec->length - 1))
-	// 			draw_line(mlx_id, win_id, restabloZ[i][j],restabloZ[i + 1][j]);
+	// 		if(i != (3))
+	// 			draw_line(mlx_id, win_id, restabloZ[i][j],restabloZ[i + 1][j],0xabcdef);
 	// 		j++;
 	// 	}
 	// 	i++;
 	// }
 	// i = 0; 
 	//printf("%d %d",rec->length,rec->width);
-	// long sp =50;
+	// long sp =10;
 	// while (i < rec->length)
 	// {
 	// 	j = 0;
 	// 	while (j < rec->width) 
 	// 	{
 	// 		if (j != (rec->width - 1))
-	// 		draw_line(mlx_id, win_id, (t_pnt3d){j+sp*j,i+sp*i},(t_pnt3d){j+sp*(j+1),i+sp*i},0xcccccc);
+	// 		draw_line(mlx_id, win_id, (t_pnt3d){restabloZ[i][j].x+sp*j,restabloZ[i][j].y+sp*i},(t_pnt3d){restabloZ[i][j+1].x+sp*(j+1),restabloZ[i][j+1].y+sp*i},0xcccccc);
 	// 		// if (i != 0)
 	// 		// draw_line(mlx_id, win_id, ij,i - 1j);
 	// 		// if (j != 0)
 	// 		// draw_line(mlx_id, win_id, ij,ij - 1);
 	// 		if(i != (rec->length - 1))
-	// 		draw_line(mlx_id, win_id, (t_pnt3d){j+sp*j,i+sp*i},(t_pnt3d){j+sp*j,i+sp*(i+1)},0xcccccc);
+	// 		draw_line(mlx_id, win_id, (t_pnt3d){restabloZ[i][j].x+sp*j,restabloZ[i][j].y+sp*i},(t_pnt3d){restabloZ[i+1][j].x+sp*j,restabloZ[i+1][j].y+sp*(i+1)},0xcccccc);
 	// 		j++;
 	// 	}
 	// 	i++;
 	// }
-	// while (i < 4)
-	// {
-	// 	j = 0;
-	// 	while (j < 8) 
-	// 	{
-	// 		if (j != (width - 1))
-	// 		draw_line(mlx_id, win_id, points[i][j],points[i][j + 1],0xdddddd);
-	// 		// if (i != 0)
-	// 		// draw_line(mlx_id, win_id, points[i][j],points[i - 1][j]);
-	// 		// if (j != 0)
-	// 		// draw_line(mlx_id, win_id, points[i][j],points[i][j - 1]);
-	// 		if(i != (rec->length - 1))
-	// 		draw_line(mlx_id, win_id, points[i][j],points[i + 1][j],0xdddddd);
-	// 		j++;
-	// 	}
-	// 	i++;
-	// }
+	while (i < tol)
+	{
+		j = 0;
+		while (j < ard) 
+		{
+			if (j != (ard - 1))
+			draw_line(mlx_id, win_id, f[i][j],f[i][j + 1],0xdddddd);
+			// if (i != 0)
+			// draw_line(mlx_id, win_id, f[i][j],f[i - 1][j]);
+			// if (j != 0)
+			// draw_line(mlx_id, win_id, f[i][j],f[i][j - 1]);
+			if(i != (tol - 1))
+			draw_line(mlx_id, win_id, f[i][j],f[i + 1][j],0xdddddd);
+			j++;
+		}
+		i++;
+	}
 	// draw_line(mlx_id, win_id, a,b);
 	// draw_line(mlx_id, win_id, c,d);
 	// draw_line(mlx_id, win_id, m,n);
@@ -562,14 +548,36 @@ int main(int argc, char *argv[])
 
 	// puts("this");
 	  //do_read_fdf_test(argc, argv);
-
-
+// 	  i = 0;
+// while(i < rec->length)
+// {
+// 	j = 0;
+// 	while (j < rec->width)
+// 	{
+// 		printf("{%ld, %ld, %ld} ",tablo[i][j].x, tablo[i][j].y, tablo[i][j].z);
+// 		j++;
+// 	}
+// 	printf("\n");
+// 	i++;
+// }
+// 	printf("-----------------------------------------------------------------------------------------------------------\n");
+// i = 0;
+// while(i < rec->length)
+// {
+// 	j = 0;
+// 	while (j < rec->width)
+// 	{
+// 		printf("{%ld, %ld} ",f[i][j].x, f[i][j].y);
+// 		j++;
+// 	}
+// 	printf("\n");
+// 	i++;
+// }
 	//mlx_hook(win_id, 6, 0, &mouse_move, &env);
-	mlx_hook(win_id, 2, 0, &key_press , &env);
+	// mlx_hook(win_id, 2, 0, &key_press , &env);
 	mlx_loop(mlx_id);
 	mlx_clear_window(mlx_id, win_id);
-	mlx_destroy_window(mlx_id, win_id);
-	
+	mlx_destroy_window(mlx_id, win_id); 
 //printf("%f",cos(0.5));
 	return (0);
 }

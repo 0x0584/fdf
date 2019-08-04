@@ -1,11 +1,41 @@
 #include "matrice.h"
 #include <stdio.h>
 
-// t_pnt2d    **projetion_matrice(t_pnt3d matrix, t_uint32 length, t_uint32 width)
-// {
+t_pnt2d    projetion_iso(t_pnt3d point)
+{
+    t_pnt2d ret2d;
+    ret2d.x = (point.x - point.y) * cos(0.523599);
+    ret2d.y = (point.x + point.y) * sin(0.523599) - point.z;
+    return (ret2d);
+}
 
-// }
-
+t_pnt2d    **projestion(t_pnt3d **matrix, t_uint32 length, t_uint32 width, char project_methode)
+{
+    t_pnt2d **projected;
+    char m = project_methode;
+    int i = 0;
+    int j;
+    /*********************************************************/
+	projected = (t_pnt2d**)malloc(sizeof(t_pnt2d*) * length);
+	while(i < length)
+	{
+		projected[i] = (t_pnt2d*)malloc(sizeof(t_pnt2d) * width);
+		i++;
+	}
+    /*********************************************************/
+    i = 0;
+    while(i < length)
+    {
+        j = 0;
+        while (j < width)
+        {   
+            projected[i][j] = projetion_iso(matrix[i][j]);
+            j++;
+        }
+        i++;
+    }
+    return (projected);
+}
 t_pnt3d    produit_matrix(t_pnt3d point, float rot_matrix[3][3])
 {
     t_pnt3d ret_pnt;
@@ -38,10 +68,10 @@ t_pnt3d **rotationX(t_pnt3d **matrix, t_uint32 length, t_uint32 width ,float ang
     t_pnt3d **ret_mat;
 	/************ allocation ret_mat ****************/
 	int i = 0;
-	ret_mat = (t_pnt3d**)malloc(sizeof(t_pnt3d*) * 3);
-	while(i < 3)
+	ret_mat = (t_pnt3d**)malloc(sizeof(t_pnt3d*) * length);
+	while(i < length)
 	{
-		ret_mat[i] = (t_pnt3d*)malloc(sizeof(t_pnt3d) * 4);
+		ret_mat[i] = (t_pnt3d*)malloc(sizeof(t_pnt3d) * width);
 		i++;
 	}
 	/************************************************/
@@ -69,10 +99,10 @@ t_pnt3d    **rotationY(t_pnt3d **matrix, t_uint32 length, t_uint32 width, float 
     t_pnt3d **ret_mat;
 	/************ allocation ret_mat ****************/
 	int i = 0;
-	ret_mat = (t_pnt3d**)malloc(sizeof(t_pnt3d*) * 3);
-	while(i < 3)
+	ret_mat = (t_pnt3d**)malloc(sizeof(t_pnt3d*) * length);
+	while(i < length)
 	{
-		ret_mat[i] = (t_pnt3d*)malloc(sizeof(t_pnt3d) * 4);
+		ret_mat[i] = (t_pnt3d*)malloc(sizeof(t_pnt3d) * width);
 		i++;
 	}
 	/************************************************/
@@ -122,4 +152,31 @@ t_pnt3d    **rotationZ(t_pnt3d **matrix, t_uint32 length, t_uint32 width, float 
         i++;
     }
     return (ret_mat);
+}
+
+t_pnt3d **redim(t_pnt3d **matrix, int length,int width, long spacing, long horiz, long verti)
+{
+    t_pnt3d **ret_mat;
+	/************ allocation ret_mat ****************/
+	int i = 0;
+	ret_mat = (t_pnt3d**)malloc(sizeof(t_pnt3d*) * length);
+	while(i < length)
+	{
+		ret_mat[i] = (t_pnt3d*)malloc(sizeof(t_pnt3d) * width);
+		i++;
+	}
+	/************************************************/
+    int j;
+    i = 0;
+    while (i < length)
+	{
+		j = 0;
+		while (j < width) 
+		{
+			ret_mat[i][j] = (t_pnt3d){matrix[i][j].x+j*spacing+horiz,matrix[i][j].y+i*spacing+verti,matrix[i][j].z};
+			j++;
+		}
+		i++;
+	}
+    return(ret_mat);
 }

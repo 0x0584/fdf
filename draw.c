@@ -14,7 +14,7 @@
 #include <mlx.h>
 #include <stdio.h>
 
-void draw_line(void *mlx, void *win, t_pnt3d a, t_pnt3d b ,int color)
+void draw_line(void *mlx, void *win, t_pnt2d a, t_pnt2d b ,int color)
 {
   	int dx;
   	int dy;

@@ -23,6 +23,13 @@ typedef struct	s_fdf_data
 	t_uint32		width;
 }				t_fdf_data;
 
+typedef struct	s_fdf_data2
+{
+	t_pnt2d			**base;
+	t_uint32		length;
+	t_uint32		width;
+}				t_fdf_data2;
+
 t_fdf_data		*fdf_read(const int fd);
 void			fdf_free(t_fdf_data **ptr_fdf);
 
