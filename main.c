@@ -47,9 +47,6 @@ void	draw_color_square(t_env *env, t_pnt3d head, t_uint32 size)
 int		mouse_press(int button, int x, int y, void *param)
 {
 	t_env *env;
-	t_pnt3d pnt1;
-	t_pnt3d pnt2;
-
 	env = param;
 	if (button)
 		;
@@ -89,7 +86,7 @@ int main(int argc, char *argv[])
 		{.y = 900, .color = COLOR_BLUE, .x = 150},
 	};
 
-	mlx_string_put(env.mlx, env.win, 150 + 70, 905, LIGHT_GRAY, "Zoom: +/- | Z-axis: u/p | Translation: UP/DOWN LEFT/RIGHT | RotationX: W/X | RotationY: A/D | RotationZ: Q/E");
+	mlx_string_put(env.mlx, env.win, 150 + 70, 905, LIGHT_GRAY, "Zoom: +/- | Z-axis: u/p | Translation: UP/DOWN LEFT/RIGHT | RotationX: W/X | RotationY: A/D | RotationZ: Q/E | Projection: Parallele(1)/isometrique(2) ");
 
 
 	mlx_string_put(env.mlx, env.win, 94, 870, LIGHT_GRAY, "Colors: ");

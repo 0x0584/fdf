@@ -9,7 +9,15 @@ t_pnt3d    projetion_iso(t_pnt3d point)
     ret2d.color = point.color;
     return (ret2d);
 }
-
+t_pnt3d    projetion_parallele(t_pnt3d point)
+{
+    t_pnt3d ret2d;
+    ret2d.x = point.x;
+    ret2d.y = point.y;
+    ret2d.z = point.z;
+    ret2d.color = point.color;
+    return (ret2d);
+}
 t_pnt3d    **projestion(t_pnt3d **matrix, t_uint32 length, t_uint32 width, char project_methode)
 {
     t_pnt3d **projected;
@@ -31,6 +39,8 @@ t_pnt3d    **projestion(t_pnt3d **matrix, t_uint32 length, t_uint32 width, char 
         {   
             if (project_methode == 'i')
                 projected[i][j] = projetion_iso(matrix[i][j]);
+            if (project_methode == 'p')
+                projected[i][j] = projetion_parallele(matrix[i][j]);
             j++;
         }
         i++;

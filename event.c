@@ -43,7 +43,7 @@ void draw_map(t_env *env, int color, t_pnt3d **redf)
 	}
 }
 
-void	to_do(long spacing,long verti,long horiz,long z_incr,float angleX,float angleY,float angleZ,t_env *env, int color)
+void	to_do(long spacing,long verti,long horiz,long z_incr,float angleX,float angleY,float angleZ,t_env *env, int color, char projection)
 {
 	t_pnt3d **tab_red;
 	t_pnt3d	**restabloX;
@@ -51,12 +51,12 @@ void	to_do(long spacing,long verti,long horiz,long z_incr,float angleX,float ang
 	t_pnt3d **restabloZ;
 	t_pnt3d **f;
 	t_pnt3d **redf;
-
+	
 	tab_red = redim(env->mat->base,env->mat->length,env->mat->width,spacing,z_incr);
 	restabloX = rotationX(tab_red, env->mat->length, env->mat->width , angleX);
 	restabloY = rotationY(restabloX, env->mat->length, env->mat->width, angleY);
 	restabloZ = rotationZ(restabloY, env->mat->length, env->mat->width , angleZ);
-	f = projestion(restabloZ ,env->mat->length, env->mat->width, 'i');
+	f = projestion(restabloZ ,env->mat->length, env->mat->width, projection);
 	redf = redim2d(f, env->mat->length, env->mat->width,horiz,verti);
 	draw_map(env, color, redf);
 	free_3dpnt_array(tab_red, env->mat->length);
@@ -72,19 +72,19 @@ int key_press(int keycode, void *param)
 	t_env *env;
 	env = param;
 	static long spacing = 33;
-	static long verti = 150;
+	static long verti = 350;
 	static long horiz = 650;
 	static long z_incr = 0;
 	static float angleX = -0.2;
 	static float angleY = 0;
 	static float angleZ = -0.5;
-
+	static char projection = 'p';
 
 	if(keycode == -1 || keycode == 126 || keycode == 125 || keycode == 124 || keycode == 123 || keycode == 69 ||
 	   keycode == 78 || keycode == 32 || keycode == 35 || keycode == 0 || keycode == 2 ||
-	   keycode == 7 || keycode == 13 || keycode == 12 || keycode == 14)
+	   keycode == 7 || keycode == 13 || keycode == 12 || keycode == 14 || keycode == 83 || keycode == 84)
 	{
-		to_do(spacing, verti, horiz, z_incr, angleX, angleY, angleZ, env, 0x000000);
+		to_do(spacing, verti, horiz, z_incr, angleX, angleY, angleZ, env, 0x000000,projection);
 		if (keycode == 126)
 			verti-=10;
 		if (keycode == 125)
@@ -113,7 +113,11 @@ int key_press(int keycode, void *param)
 			angleZ+=0.01;
 		if (keycode == 14)
 			angleZ-=0.01;
-		to_do( spacing, verti, horiz, z_incr, angleX, angleY, angleZ, env, default_color(-1));
+		if (keycode == 83)
+			projection = 'p';
+		if (keycode == 84)
+			projection = 'i';		
+		to_do( spacing, verti, horiz, z_incr, angleX, angleY, angleZ, env, default_color(-1),projection);
 	}
 
 	return(0);
