@@ -20,7 +20,6 @@ typedef struct	s_3d_point
 	t_int64 x;
 	t_int64 y;
 	t_int64 z;
-	bool 	is_3d;
 	int		color;
 }				t_pnt3d;
 

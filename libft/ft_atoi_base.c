@@ -1,19 +1,5 @@
-#include "./libft/libft.h"
+#include "libft.h"
 
-char    *ft_strcdup(char *s, int c)
-{
-    size_t        i;
-    char        *ret;
-
-    i = 0;
-    if (s == NULL)
-        return (NULL);
-    while (s[i] != (char)c && s[i])
-        i++;
-    ret = ft_strnew(i);
-    ret = ft_strncpy(ret, s, i);
-    return (ret);
-}
 static int	isblank(int c)
 {
 	return (c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r'
