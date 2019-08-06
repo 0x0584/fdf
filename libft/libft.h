@@ -6,7 +6,7 @@
 /*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/30 17:32:57 by archid-           #+#    #+#             */
-/*   Updated: 2019/07/15 22:24:50 by archid-          ###   ########.fr       */
+/*   Updated: 2019/08/06 17:48:43 by archid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,5 +137,8 @@ t_int8			ft_utf8tostr_ch(t_int8 *dest, t_int32 wch);
 char			*ft_itoa(int n);
 char			*ft_ftoa(float f, t_int8 precision);
 char			*ft_ltoa_hex(long l);
+
+int				ft_atoi_base(const char *nptr, const char *base);
+char			*ft_strcdup(char *s, int c);
 
 #endif

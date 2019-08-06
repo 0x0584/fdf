@@ -1,4 +1,3 @@
-
 NAME	= fdf
 RM		= rm -f
 
@@ -8,13 +7,13 @@ OBJS	= $(patsubst %.c, %.o, $(SRCS))
 
 CC		= gcc
 CFLAGS	= -Wall -Wextra
-LDFLAGS = -lm -Llibft -lft -lmlx -framework OpenGL -framework AppKit
+LDFLAGS = -lm -lmlx -framework OpenGL -framework AppKit
 
-all: $(NAME)
-	make -C ./libft 
+$(NAME): all $(OBJS)
+	gcc -o $(NAME) $(OBJS) $(LDFLAGS) libft/libft.a
 
-$(NAME): $(OBJS)
-	gcc -o $(NAME) $^ $(LDFLAGS)
+all:
+	make -C ./libft
 
 %.o: %.c $(DEPS)
 	$(CC) $(CFLAGS) -c $< -o $@ $(LDFLAGS)

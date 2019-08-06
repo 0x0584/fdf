@@ -6,14 +6,14 @@
 /*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 23:17:05 by archid-           #+#    #+#             */
-/*   Updated: 2019/07/17 01:35:45 by archid-          ###   ########.fr       */
+/*   Updated: 2019/08/06 17:41:16 by archid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <mlx.h>
 #include "gnl.h"
 #include "point.h"
-#include "basic_func.h"
+#include "libft/libft.h"
 
 t_pnt3d		point_2d_init(t_int64 x, t_int64 y)
 {
