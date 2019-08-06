@@ -6,7 +6,7 @@
 /*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 18:36:12 by archid-           #+#    #+#             */
-/*   Updated: 2019/08/06 18:08:14 by archid-          ###   ########.fr       */
+/*   Updated: 2019/08/06 18:29:41 by archid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #define DIM_GRAY			0x696969
 #define LIGHT_GRAY			0xD3D3D3
 #define DARK_GREEN			0x006400
-#define COLOR_RED			0x0000FF
+#define COLOR_BLUE			0x0000FF
 
 const int win_length = 2000, win_width = 1000;
 
@@ -49,10 +49,19 @@ int		mouse_press(int button, int x, int y, void *param)
 	t_env *env;
 	t_pnt3d pnt1;
 	t_pnt3d pnt2;
+
 	env = param;
 	if (button)
 		;
 
+	if (x >= 70 && x <= 100 && y >= 900 && y <= 930)
+		set_default_color(FIRE_BRICK);
+	if (x >= 110 && x <= 140 && y >= 900 && y <= 930)
+		set_default_color(DARK_GREEN);
+	if (x >= 150 && x <= 180 && y >= 900 && y <= 930)
+		set_default_color(COLOR_BLUE);
+
+	key_press(-1, param);
 	return (0);
 }
 
@@ -77,7 +86,7 @@ int main(int argc, char *argv[])
 	t_pnt3d points[] = {
 		{.y = 900, .color = FIRE_BRICK, .x = 70},
 		{.y = 900, .color = DARK_GREEN, .x = 110 },
-		{.y = 900, .color = COLOR_RED, .x = 150},
+		{.y = 900, .color = COLOR_BLUE, .x = 150},
 	};
 
 	draw_color_square(&env, points[0], 30);

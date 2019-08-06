@@ -8,3 +8,4 @@ typedef struct s_env
 }				t_env;
 
 int key_press(int keycode, void *param);
+void set_default_color(int color);
