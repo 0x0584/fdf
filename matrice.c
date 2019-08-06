@@ -1,25 +1,26 @@
 #include "matrice.h"
 #include <stdio.h>
 
-t_pnt2d    projetion_iso(t_pnt3d point)
+t_pnt3d    projetion_iso(t_pnt3d point)
 {
-    t_pnt2d ret2d;
+    t_pnt3d ret2d;
     ret2d.x = (point.x - point.y) * cos(0.523599);
     ret2d.y = (point.x + point.y) * sin(0.523599) - point.z;
+    ret2d.color = point.color;
     return (ret2d);
 }
 
-t_pnt2d    **projestion(t_pnt3d **matrix, t_uint32 length, t_uint32 width, char project_methode)
+t_pnt3d    **projestion(t_pnt3d **matrix, t_uint32 length, t_uint32 width, char project_methode)
 {
-    t_pnt2d **projected;
+    t_pnt3d **projected;
     char m = project_methode;
     int i = 0;
     int j;
     /*********************************************************/
-	projected = (t_pnt2d**)malloc(sizeof(t_pnt2d*) * length);
+	projected = (t_pnt3d**)malloc(sizeof(t_pnt3d*) * length);
 	while(i < length)
 	{
-		projected[i] = (t_pnt2d*)malloc(sizeof(t_pnt2d) * width);
+		projected[i] = (t_pnt3d*)malloc(sizeof(t_pnt3d) * width);
 		i++;
 	}
     /*********************************************************/
@@ -59,6 +60,7 @@ t_pnt3d    produit_matrix(t_pnt3d point, float rot_matrix[3][3])
     ret_pnt.x = ret[0];
     ret_pnt.y = ret[1];
     ret_pnt.z = ret[2];
+    ret_pnt.color = point.color;
     return (ret_pnt);
 }
 
@@ -154,7 +156,7 @@ t_pnt3d    **rotationZ(t_pnt3d **matrix, t_uint32 length, t_uint32 width, float 
     return (ret_mat);
 }
 
-t_pnt3d **redim(t_pnt3d **matrix, int length,int width, long spacing, long horiz, long verti)
+t_pnt3d **redim(t_pnt3d **matrix, int length,int width, long spacing, long z_incr)
 {
     t_pnt3d **ret_mat;
 	/************ allocation ret_mat ****************/
@@ -173,10 +175,36 @@ t_pnt3d **redim(t_pnt3d **matrix, int length,int width, long spacing, long horiz
 		j = 0;
 		while (j < width) 
 		{
-			ret_mat[i][j] = (t_pnt3d){matrix[i][j].x+j*spacing+horiz,matrix[i][j].y+i*spacing+verti,matrix[i][j].z};
+			ret_mat[i][j] = (t_pnt3d){matrix[i][j].x+j*spacing,matrix[i][j].y+i*spacing,(matrix[i][j].z != 0) ? (matrix[i][j].z + z_incr * matrix[i][j].z) : (matrix[i][j].z),matrix[i][j].color};
 			j++;
 		}
 		i++;
 	}
     return(ret_mat);
+}
+t_pnt3d    **redim2d(t_pnt3d **matrix, t_uint32 length, t_uint32 width,long horiz, long verti)
+{
+    t_pnt3d **ret_mat;
+	/************ allocation ret_mat ****************/
+	int i = 0;
+	ret_mat = (t_pnt3d**)malloc(sizeof(t_pnt3d*) * length);
+	while(i < length)
+	{
+		ret_mat[i] = (t_pnt3d*)malloc(sizeof(t_pnt3d) * width);
+		i++;
+	}
+	/************************************************/
+    int j;
+    i = 0;
+    while(i < length)
+    {
+        j = 0;
+        while (j < width)
+        {   
+            ret_mat[i][j] = (t_pnt3d){matrix[i][j].x+horiz,matrix[i][j].y+verti,matrix[i][j].color};
+            j++;
+        }
+        i++;
+    }
+    return (ret_mat);
 }

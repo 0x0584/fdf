@@ -20,18 +20,14 @@ typedef struct	s_3d_point
 	t_int64 x;
 	t_int64 y;
 	t_int64 z;
+	bool 	is_3d;
+	int		color;
 }				t_pnt3d;
 
-typedef struct	s_2d_point
-{
-	t_int64 x;
-	t_int64 y;
-}				t_pnt2d;
-
-t_pnt2d		point_2d_init(t_int64 x, t_int64 y);
+t_pnt3d		point_2d_init(t_int64 x, t_int64 y);
 t_pnt3d		point_3d_init(t_int64 x, t_int64 y, t_int64 z);
 t_pnt3d		*get_coords_in_line(char *line, t_uint32 y);
-void		point_plot(void *mlx_id, void *win_id, t_pnt2d point);
+void		point_plot(void *mlx_id, void *win_id, t_pnt3d point);
 
 // void		point_dbg(t_pnt_array pnts);
 

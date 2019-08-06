@@ -25,7 +25,7 @@ typedef struct	s_fdf_data
 
 typedef struct	s_fdf_data2
 {
-	t_pnt2d			**base;
+	t_pnt3d			**base;
 	t_uint32		length;
 	t_uint32		width;
 }				t_fdf_data2;

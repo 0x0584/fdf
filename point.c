@@ -11,13 +11,13 @@
 /* ************************************************************************** */
 
 #include <mlx.h>
-
 #include "gnl.h"
 #include "point.h"
+#include "basic_func.h"
 
-t_pnt2d		point_2d_init(t_int64 x, t_int64 y)
+t_pnt3d		point_2d_init(t_int64 x, t_int64 y)
 {
-	t_pnt2d pnt;
+	t_pnt3d pnt;
 
 	pnt.x = x;
 	pnt.y = y;
@@ -50,7 +50,9 @@ t_pnt3d		*get_coords_in_line(char *line, t_uint32 y)
 	{
 		cord[i].x = i;
 		cord[i].y = y;
-		cord[i++].z = ft_atoi(*walk++);
+		cord[i].z = ft_atoi(ft_strcdup(*walk,','));
+		cord[i++].color = (ft_strchr(*walk,',') != NULL) ? (ft_atoi_base(ft_strchr(*walk,',') + 3,"0123456789abcdef")) : 0xffffff;
+		walk++;
 	}
 	walk = splited;
 	while (*walk)
@@ -59,7 +61,7 @@ t_pnt3d		*get_coords_in_line(char *line, t_uint32 y)
 	return (cord);
 }
 
-void		point_plot(void *mlx_id, void *win_id, t_pnt2d point)
+void		point_plot(void *mlx_id, void *win_id, t_pnt3d point)
 {
 	mlx_pixel_put(mlx_id, win_id, point.x, point.y, 200);
 }
