@@ -51,7 +51,7 @@ void	to_do(long spacing,long verti,long horiz,long z_incr,float angleX,float ang
 	t_pnt3d **restabloZ;
 	t_pnt3d **f;
 	t_pnt3d **redf;
-	
+
 	tab_red = redim(env->mat->base,env->mat->length,env->mat->width,spacing,z_incr);
 	restabloX = rotationX(tab_red, env->mat->length, env->mat->width , angleX);
 	restabloY = rotationY(restabloX, env->mat->length, env->mat->width, angleY);
@@ -79,6 +79,9 @@ int key_press(int keycode, void *param)
 	static float angleY = 0;
 	static float angleZ = -0.5;
 	static char projection = 'p';
+
+	if (keycode == 53)
+		exit(0);
 
 	if(keycode == -1 || keycode == 126 || keycode == 125 || keycode == 124 || keycode == 123 || keycode == 69 ||
 	   keycode == 78 || keycode == 32 || keycode == 35 || keycode == 0 || keycode == 2 ||
@@ -114,9 +117,15 @@ int key_press(int keycode, void *param)
 		if (keycode == 14)
 			angleZ-=0.01;
 		if (keycode == 83)
+		{
+			z_incr = 0;
 			projection = 'p';
+		}
 		if (keycode == 84)
-			projection = 'i';		
+		{
+			z_incr = 0;
+			projection = 'i';
+		}
 		to_do( spacing, verti, horiz, z_incr, angleX, angleY, angleZ, env, default_color(-1),projection);
 	}
 
