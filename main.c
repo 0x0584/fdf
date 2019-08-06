@@ -6,7 +6,7 @@
 /*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 18:36:12 by archid-           #+#    #+#             */
-/*   Updated: 2019/08/06 18:29:41 by archid-          ###   ########.fr       */
+/*   Updated: 2019/08/06 19:09:34 by archid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ int		mouse_press(int button, int x, int y, void *param)
 		;
 
 	if (x >= 70 && x <= 100 && y >= 900 && y <= 930)
-		set_default_color(FIRE_BRICK);
+		default_color(FIRE_BRICK);
 	if (x >= 110 && x <= 140 && y >= 900 && y <= 930)
-		set_default_color(DARK_GREEN);
+		default_color(DARK_GREEN);
 	if (x >= 150 && x <= 180 && y >= 900 && y <= 930)
-		set_default_color(COLOR_BLUE);
+		default_color(COLOR_BLUE);
 
 	key_press(-1, param);
 	return (0);
@@ -85,9 +85,14 @@ int main(int argc, char *argv[])
 
 	t_pnt3d points[] = {
 		{.y = 900, .color = FIRE_BRICK, .x = 70},
-		{.y = 900, .color = DARK_GREEN, .x = 110 },
+		{.y = 900, .color = DARK_GREEN, .x = 110},
 		{.y = 900, .color = COLOR_BLUE, .x = 150},
 	};
+
+	mlx_string_put(env.mlx, env.win, 150 + 70, 905, LIGHT_GRAY, "Zoom: +/- | Z-axis: u/p | Translation: UP/DOWN LEFT/RIGHT | RotationX: W/X | RotationY: A/D | RotationZ: Q/E");
+
+
+	mlx_string_put(env.mlx, env.win, 94, 870, LIGHT_GRAY, "Colors: ");
 
 	draw_color_square(&env, points[0], 30);
 	draw_color_square(&env, points[1], 30);

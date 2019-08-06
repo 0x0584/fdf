@@ -6,13 +6,9 @@
 /*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/30 17:32:57 by archid-           #+#    #+#             */
-/*   Updated: 2019/08/06 17:48:43 by archid-          ###   ########.fr       */
+/*   Updated: 2019/08/06 21:21:44 by archid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/* FIXME: split this fucking libft into multiple parts */
-/* FIXME: split libft into parts */
-/* TODO: clean the fucking code */
 
 #ifndef LIBFT_H
 # define LIBFT_H
@@ -36,10 +32,10 @@
 
 # define LST_NEXT(e)						e = e->next
 
-#include "types.h"
-#include "floats.h"
+# include "types.h"
+# include "floats.h"
 
-struct	s_list
+struct			s_list
 {
 	void			*content;
 	size_t			content_size;
@@ -86,7 +82,7 @@ char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char			*ft_strsub(char const *s, unsigned int start, size_t len);
 char			*ft_strtrim(char const *s);
 char			*ft_strjoin(char const *s1, char const *s2);
-ssize_t			ft_strnprepend(char **dest, const char *prefix, size_t prefixsz);
+ssize_t			ft_strnprepend(char **dest, const char *prefix, size_t presz);
 ssize_t			ft_strprepend(char **dest, const char *prefix);
 
 int				ft_atoi(const char *s);

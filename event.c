@@ -3,11 +3,14 @@
 #include "matrice.h"
 #include "event.h"
 
-static int default_color = 0x0000ff;
-
-void set_default_color(int color)
+int		default_color(int color)
 {
+	static int default_color;
+
+	if (color == -1)
+		return default_color;
 	default_color = color;
+	return default_color;
 }
 
 void free_3dpnt_array(t_pnt3d **array, t_uint32 length)
@@ -30,9 +33,9 @@ void draw_map(t_env *env, int color, t_pnt3d **redf)
 		j = 0;
 		while (j < env->mat->width)
 		{
-			if (j != (env->mat->width - 1))
+			if (j != (env->mat->width - 1) && redf[i][j + 1].y < 850)
 				draw_line(env->mlx, env->win, redf[i][j],redf[i][j + 1],color);
-			if(i != (env->mat->length - 1))
+			if(i != (env->mat->length - 1) && redf[i + 1][j].y < 850)
 				draw_line(env->mlx, env->win, redf[i][j],redf[i + 1][j],color);
 			j++;
 		}
@@ -110,7 +113,7 @@ int key_press(int keycode, void *param)
 			angleZ+=0.01;
 		if (keycode == 14)
 			angleZ-=0.01;
-		to_do( spacing, verti, horiz, z_incr, angleX, angleY, angleZ, env, default_color);
+		to_do( spacing, verti, horiz, z_incr, angleX, angleY, angleZ, env, default_color(-1));
 	}
 
 	return(0);
