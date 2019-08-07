@@ -1,14 +1,25 @@
-# include "point.h"
-# include <math.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   matrice.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/07 15:56:34 by archid-           #+#    #+#             */
+/*   Updated: 2019/08/07 20:28:57 by archid-          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-t_pnt3d projetion_iso(t_pnt3d point);
-t_pnt3d **rotationX(t_pnt3d **matrix, t_uint32 length, t_uint32 width ,float angle);
-t_pnt3d **rotationY(t_pnt3d **matrix, t_uint32 length, t_uint32 width, float angle);
-t_pnt3d **rotationZ(t_pnt3d **matrix, t_uint32 length, t_uint32 width, float angle);
-t_pnt3d    **projestion(t_pnt3d **matrix, t_uint32 length, t_uint32 width, char project_methode);
-t_pnt3d    projetion_iso(t_pnt3d point);
-t_pnt3d    produit_matrix(t_pnt3d point, float rot_matrix[3][3]);
-t_pnt3d **redim(t_pnt3d **matrix, t_uint32 length, t_uint32 width, long spacing, long z_incr);
-t_pnt3d    **redim2d(t_pnt3d **matrix, t_uint32 length, t_uint32 width,long horiz, long verti);
+#ifndef MATRICE_H
+# define MATRICE_H
 
+#include "fdf.h"
+#include "event.h"
 
+t_pnt3d		**rotation(t_pnt3d **matrix, t_info *ifdf, t_rot_type  rot,
+							t_env *env);
+t_pnt3d		**projection(t_pnt3d **matrix, t_info *ifdf, t_env *env);
+t_pnt3d		**redim(t_pnt3d **mat, t_info *ifdf, t_env *env);
+t_pnt3d		**redim2d(t_pnt3d **mat, t_info *ifdf, t_env *env);
+
+#endif

@@ -13,37 +13,7 @@ int		default_color(int color)
 	return default_color;
 }
 
-void free_3dpnt_array(t_pnt3d **array, t_uint32 length)
-{
-	t_uint32 i;
-
-	i = 0;
-	while (i < length)
-		free(array[i++]);
-	free(array);
-}
-
-void draw_map(t_env *env, int color, t_pnt3d **redf)
-{
-	t_uint32 i = 0;
-	t_uint32 j;
-
-	while (i < env->mat->length)
-	{
-		j = 0;
-		while (j < env->mat->width)
-		{
-			if (j != (env->mat->width - 1) && redf[i][j + 1].y < 850)
-				draw_line(env->mlx, env->win, redf[i][j],redf[i][j + 1],color);
-			if(i != (env->mat->length - 1) && redf[i + 1][j].y < 850)
-				draw_line(env->mlx, env->win, redf[i][j],redf[i + 1][j],color);
-			j++;
-		}
-		i++;
-	}
-}
-
-void	to_do(long spacing,long verti,long horiz,long z_incr,float angleX,float angleY,float angleZ,t_env *env, int color, char projection)
+void	apply_projection(t_info *ifdf, t_env *env, int color)
 {
 	t_pnt3d **tab_red;
 	t_pnt3d	**restabloX;
@@ -52,82 +22,99 @@ void	to_do(long spacing,long verti,long horiz,long z_incr,float angleX,float ang
 	t_pnt3d **f;
 	t_pnt3d **redf;
 
-	tab_red = redim(env->mat->base,env->mat->length,env->mat->width,spacing,z_incr);
-	restabloX = rotationX(tab_red, env->mat->length, env->mat->width , angleX);
-	restabloY = rotationY(restabloX, env->mat->length, env->mat->width, angleY);
-	restabloZ = rotationZ(restabloY, env->mat->length, env->mat->width , angleZ);
-	f = projestion(restabloZ ,env->mat->length, env->mat->width, projection);
-	redf = redim2d(f, env->mat->length, env->mat->width,horiz,verti);
+	tab_red = redim(env->mat->base, ifdf, env);
+	ft_putendl("before redim");
+	restabloX = rotation(tab_red, ifdf , ROT_X, env);
+	restabloY = rotation(restabloX, ifdf , ROT_Y, env);
+	restabloZ = rotation(restabloY, ifdf , ROT_Z, env);
+	f = projection(restabloZ, ifdf, env);
+	redf = redim2d(f, ifdf, env);
 	draw_map(env, color, redf);
-	free_3dpnt_array(tab_red, env->mat->length);
-	free_3dpnt_array(restabloX, env->mat->length);
-	free_3dpnt_array(restabloY, env->mat->length);
-	free_3dpnt_array(restabloZ, env->mat->length);
-	free_3dpnt_array(f, env->mat->length);
-	free_3dpnt_array(redf, env->mat->length);
+	point_free_array(tab_red, env->mat->length);
+	point_free_array(restabloX, env->mat->length);
+	point_free_array(restabloY, env->mat->length);
+	point_free_array(restabloZ, env->mat->length);
+	point_free_array(f, env->mat->length);
+	point_free_array(redf, env->mat->length);
 }
 
 int key_press(int keycode, void *param)
 {
+	static t_info *ifdf = NULL;
 	t_env *env;
+
 	env = param;
-	static long spacing = 33;
-	static long verti = 350;
-	static long horiz = 650;
-	static long z_incr = 0;
-	static float angleX = -0.2;
-	static float angleY = 0;
-	static float angleZ = -0.5;
-	static char projection = 'p';
-
-	if (keycode == 53)
-		exit(0);
-
-	if(keycode == -1 || keycode == 126 || keycode == 125 || keycode == 124 || keycode == 123 || keycode == 69 ||
-	   keycode == 78 || keycode == 32 || keycode == 35 || keycode == 0 || keycode == 2 ||
-	   keycode == 7 || keycode == 13 || keycode == 12 || keycode == 14 || keycode == 83 || keycode == 84)
+	if (ifdf == NULL)
 	{
-		to_do(spacing, verti, horiz, z_incr, angleX, angleY, angleZ, env, 0x000000,projection);
-		if (keycode == 126)
-			verti-=10;
-		if (keycode == 125)
-			verti+=10;
-		if (keycode == 123)
-			horiz-=10;
-		if (keycode == 124)
-			horiz+=10;
-		if (keycode == 69)
-			spacing+=10;
-		if (keycode == 78)
-			spacing-=10;
-		if (keycode == 35)
-			z_incr+=2;
-		if (keycode == 32)
-			z_incr-=2;
-		if (keycode == 0)
-			angleY-=0.01;
-		if (keycode == 2)
-			angleY+=0.01;
-		if (keycode == 7)
-			angleX+=0.01;
-		if (keycode == 13)
-			angleX-=0.01;
-		if (keycode == 12)
-			angleZ+=0.01;
-		if (keycode == 14)
-			angleZ-=0.01;
-		if (keycode == 83)
+		t_pnt3d pnt = {450, 450, 0, BLACK};
+		ifdf = get_fdf_info();
+		draw_color_square(env, pnt, 350);
+	}
+	if (keycode == KEY_ESC)
+	{
+		mlx_clear_window(env->mlx, env->win);
+		mlx_destroy_window(env->mlx, env->win);
+		exit(0);
+	}
+
+	if(keycode == KEY_DEFAULT || key_is_direc(keycode) || key_is_zoom(keycode)
+	   || key_is_z_incr(keycode) || key_is_rot(keycode) || key_is_proj(keycode))
+	{
+		apply_projection(ifdf, env, BLACK);
+		if (keycode == KEY_UP || keycode == KEY_DOWN)
+			ifdf->verti += (keycode == KEY_UP ? -DEF_VERTI : DEF_VERTI);
+		if (keycode == KEY_LEFT || keycode == KEY_RIGHT)
+			ifdf->horiz += (keycode == KEY_LEFT ? -DEF_HORIZ : DEF_HORIZ);
+		if (key_is_zoom(keycode))
+			ifdf->spacing += (keycode == KEY_ZOOM_UP ?
+							  DEF_SPACING : -DEF_SPACING);
+		if (key_is_z_incr(keycode))
+			ifdf->z_incr += (keycode == KEY_Z_INCR ? DEF_Z_INCR : -DEF_Z_INCR);
+		if (keycode == KEY_ROT_Y_UP || keycode == KEY_ROT_Y_DOWN)
+			ifdf->angle[ROT_Y] += (keycode == KEY_ROT_Y_UP ?
+										-DEF_ANGLE_Y : DEF_ANGLE_Y);
+		if (keycode == KEY_ROT_X_DOWN || keycode == KEY_ROT_X_UP)
+			ifdf->angle[ROT_X] += (keycode == KEY_ROT_X_UP ?
+										-DEF_ANGLE_X : DEF_ANGLE_X);
+		if (keycode == KEY_ROT_Z_DOWN || keycode == KEY_ROT_Z_UP)
+			ifdf->angle[ROT_Z] += (keycode == KEY_ROT_Z_UP ?
+										-DEF_ANGLE_Z : DEF_ANGLE_Z);
+		if (keycode == KEY_PROJ_PARA || keycode == KEY_PROJ_ISO)
 		{
-			z_incr = 0;
-			projection = 'p';
+			ifdf->z_incr = 0;
+			ifdf->proj_type =  keycode == KEY_PROJ_ISO ? 'i' : 'p';
 		}
-		if (keycode == 84)
-		{
-			z_incr = 0;
-			projection = 'i';
-		}
-		to_do( spacing, verti, horiz, z_incr, angleX, angleY, angleZ, env, default_color(-1),projection);
+		apply_projection(ifdf, env, default_color(-1));
+		draw_edge(env);
 	}
 
 	return(0);
+}
+
+bool			key_is_direc(t_keycode code)
+{
+	return (code == KEY_LEFT || code == KEY_RIGHT
+			|| code == KEY_UP || code == KEY_DOWN);
+}
+
+bool			key_is_zoom(t_keycode code)
+{
+	return (code == KEY_ZOOM_UP || code == KEY_ZOOM_DOWN);
+}
+
+bool			key_is_z_incr(t_keycode code)
+{
+	return (code == KEY_Z_INCR || code == KEY_Z_DECR);
+}
+
+bool			key_is_rot(t_keycode code)
+{
+	return (code == KEY_ROT_X_UP || code == KEY_ROT_X_DOWN
+			|| code == KEY_ROT_Y_UP || code == KEY_ROT_Y_DOWN
+			|| code == KEY_ROT_Z_UP || code == KEY_ROT_Z_DOWN);
+}
+
+bool			key_is_proj(t_keycode code)
+{
+	return (code == KEY_PROJ_ISO || code == KEY_PROJ_PARA);
 }
