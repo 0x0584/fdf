@@ -6,7 +6,7 @@
 /*   By: archid- <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 05:22:36 by archid-           #+#    #+#             */
-/*   Updated: 2019/06/27 16:40:56 by archid-          ###   ########.fr       */
+/*   Updated: 2019/08/07 15:39:48 by archid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 t_int8	ft_digitcount(int n)
 {
-	t_int8 count;
-	t_uint16 u;
+	t_int8		count;
+	t_uint16	u;
 
 	if (n == 0)
 		return (1);
