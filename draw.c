@@ -6,7 +6,7 @@
 /*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 21:16:49 by archid-           #+#    #+#             */
-/*   Updated: 2019/08/07 22:03:41 by archid-          ###   ########.fr       */
+/*   Updated: 2019/08/08 00:45:49 by archid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,12 @@ void	draw_map(t_env *env, t_color color, t_pnt3d **redf)
 
 void	draw_edge(t_env *env)
 {
-	t_uint16		i;
-	static t_pnt3d	points[] = {
-		{.y = 900, .color = FIRE_BRICK, .x = 70},
-		{.y = 900, .color = DARK_GREEN, .x = 110},
-		{.y = 900, .color = COLOR_BLUE, .x = 150},
-	};
+	t_int16			i;
+	static t_pnt3d	*points = NULL;
 
 	i = 0;
+	if (points == NULL)
+		points = get_default_colors();
 	while (i < 140)
 	{
 		draw_line(env,
@@ -99,8 +97,7 @@ void	draw_edge(t_env *env)
 					"Zoom: +/- | Z-axis: u/p | Translation: UP/DOWN "
 					"LEFT/RIGHT | RotationX: W/X | RotationY: A/D | "
 					"RotationZ: Q/E | Projection: Parallel(1)/isometrique(2)");
-	mlx_string_put(env->mlx, env->win, 94, 870, LIGHT_GRAY, "Colors: ");
-	draw_color_square(env, points[0], 30);
-	draw_color_square(env, points[1], 30);
-	draw_color_square(env, points[2], 30);
+	i = 0;
+	while (i < COUNT_COLORS_CHOICE)
+		draw_color_square(env, points[i++], 30);
 }

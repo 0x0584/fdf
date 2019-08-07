@@ -6,7 +6,7 @@
 /*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 15:54:42 by archid-           #+#    #+#             */
-/*   Updated: 2019/08/07 20:48:00 by archid-          ###   ########.fr       */
+/*   Updated: 2019/08/08 00:25:02 by archid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "fdf.h"
 # include "color.h"
+# include "point.h"
 
 typedef struct	s_mlx_environment
 {

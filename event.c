@@ -6,7 +6,7 @@
 /*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 20:46:45 by archid-           #+#    #+#             */
-/*   Updated: 2019/08/07 22:13:27 by archid-          ###   ########.fr       */
+/*   Updated: 2019/08/08 00:38:51 by archid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int				key_press(int keycode, void *param)
 	{
 		apply_projection(ifdf, env, BLACK);
 		handle_fdf_info(ifdf, keycode);
-		apply_projection(ifdf, env, default_color(-1));
+		apply_projection(ifdf, env, set_default_color(-1));
 		draw_edge(env);
 	}
 	return (0);
@@ -104,12 +104,24 @@ int				mouse_press(int button, int x, int y, void *param)
 
 	env = param;
 	(void)button;
+	if (x >= 70 && x <= 100 && y >= 860 && y <= 890)
+		set_default_color(FIRE_BRICK);
+	if (x >= 110 && x <= 140 && y >= 860 && y <= 890)
+		set_default_color(DARK_GREEN);
+	if (x >= 150 && x <= 180 && y >= 860 && y <= 890)
+		set_default_color(COLOR_BLUE);
 	if (x >= 70 && x <= 100 && y >= 900 && y <= 930)
-		default_color(FIRE_BRICK);
+		set_default_color(CLOUDY_MORNING);
 	if (x >= 110 && x <= 140 && y >= 900 && y <= 930)
-		default_color(DARK_GREEN);
+		set_default_color(ORANGINA);
 	if (x >= 150 && x <= 180 && y >= 900 && y <= 930)
-		default_color(COLOR_BLUE);
+		set_default_color(PINKY);
+	if (x >= 70 && x <= 100 && y >= 940 && y <= 970)
+		set_default_color(PURPLE_HAZE);
+	if (x >= 110 && x <= 140 && y >= 940 && y <= 970)
+		set_default_color(LIGHT_GREEN);
+	if (x >= 150 && x <= 180 && y >= 940 && y <= 970)
+		set_default_color(CARAMELLO);
 	key_press(-1, param);
 	return (0);
 }
