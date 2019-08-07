@@ -6,13 +6,14 @@
 /*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 20:46:45 by archid-           #+#    #+#             */
-/*   Updated: 2019/08/07 21:05:01 by archid-          ###   ########.fr       */
+/*   Updated: 2019/08/07 22:13:27 by archid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "draw.h"
-#include "matrice.h"
+#include "projection.h"
+#include "rotation.h"
 #include "event.h"
 #include "keys.h"
 
