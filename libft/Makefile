@@ -18,7 +18,7 @@ SRCS	= $(shell find . -type f -name "*.c")
 OBJS	= $(patsubst %.c, %.o, $(SRCS))
 
 CC		= gcc
-CFLAGS	= -Wall -Wextra -ggdb # -Werror
+CFLAGS	= -Wall -Wextra -Werror
 
 all: $(NAME)
 

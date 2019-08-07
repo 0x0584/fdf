@@ -6,7 +6,7 @@
 /*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 18:36:12 by archid-           #+#    #+#             */
-/*   Updated: 2019/08/07 22:07:18 by archid-          ###   ########.fr       */
+/*   Updated: 2019/08/07 23:54:03 by archid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,40 @@ int		fdf_close(void *param)
 	exit(0);
 }
 
+int		is_same_nbr_line(char *argv[])
+{
+	int		fd;
+	int		prec;
+	int		curr;
+	char	*str;
+	int		ret;
+
+	fd = open(argv[1], O_RDONLY);
+	ret = get_next_line(fd, &str);
+	if (ret == 0)
+		return (0);
+	prec = ft_wordcount(str, ' ');
+	while ((ret = get_next_line(fd, &str)) > 0)
+	{
+		curr = ft_wordcount(str, ' ');
+		if (curr != prec)
+			return (0);
+	}
+	close(fd);
+	return (1);
+}
+
 int		main(int argc, char *argv[])
 {
 	t_fdf_data	*data;
 	t_env		env;
 	int			fd;
 
-	if (argc != 2)
+	if (argc != 2 || !is_same_nbr_line(argv))
+	{
+		ft_putendl("Error!");
 		return (0);
+	}
 	fd = open(argv[1], O_RDONLY);
 	data = fdf_read(fd);
 	env.mlx = mlx_init();

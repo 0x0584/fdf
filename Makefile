@@ -18,7 +18,7 @@ SRCS	= $(shell find . -type f -name "*.c")
 OBJS	= $(patsubst %.c, %.o, $(SRCS))
 
 CC		= gcc
-CFLAGS	= -Wall -Wextra
+CFLAGS	= -Wall -Werror -Wextra
 LDFLAGS = -lm -lmlx -framework OpenGL -framework AppKit
 
 $(NAME): all $(OBJS)
