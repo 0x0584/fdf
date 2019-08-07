@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   matrice.c                                          :+:      :+:    :+:   */
+/*   retation.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 16:25:11 by archid-           #+#    #+#             */
-/*   Updated: 2019/08/07 20:50:57 by archid-          ###   ########.fr       */
+/*   Updated: 2019/08/07 21:48:17 by archid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "matrice.h"
+#include "rotation.h"
 
 static void		rotate_point(t_pnt3d *rotted, t_pnt3d ori, t_info ifdf,
-									t_rot_type rot)
+								t_rot_type rot)
 {
 	if (rot == ROT_X)
 	{
@@ -38,73 +38,72 @@ static void		rotate_point(t_pnt3d *rotted, t_pnt3d ori, t_info ifdf,
 t_pnt3d			**rotation(t_pnt3d **mat, t_info *ifdf, t_rot_type rot,
 								t_env *env)
 {
-
-    t_pnt3d		**ret_mat;
+	t_pnt3d		**ret_mat;
 	t_uint32	i;
-    t_uint32	j;
+	t_uint32	j;
 
-    i = 0;
+	i = 0;
 	ret_mat = point_alloc_array(ifdf->length, ifdf->width);
-    while(i < env->mat->length)
-    {
-        j = 0;
-        while (j < env->mat->width)
-        {
+	while (i < env->mat->length)
+	{
+		j = 0;
+		while (j < env->mat->width)
+		{
 			rotate_point(&ret_mat[i][j], mat[i][j], *ifdf, rot);
-            j++;
-        }
-        i++;
-    }
+			j++;
+		}
+		i++;
+	}
 	return (ret_mat);
 }
 
 t_pnt3d			**redim(t_pnt3d **mat, t_info *ifdf, t_env *env)
 {
-    t_pnt3d **ret_mat;
-	t_uint32 i = 0;
-    t_uint32 j;
+	t_pnt3d		**ret_mat;
+	t_uint32	i;
+	t_uint32	j;
 
-    i = 0;
-    ret_mat = point_alloc_array(ifdf->length, ifdf->width);
-    while (i < env->mat->length)
+	i = 0;
+	ret_mat = point_alloc_array(ifdf->length, ifdf->width);
+	while (i < env->mat->length)
 	{
 		j = 0;
 		while (j < env->mat->width)
 		{
 			ret_mat[i][j].x = mat[i][j].x + j * ifdf->spacing;
 			ret_mat[i][j].y = mat[i][j].y + i * ifdf->spacing;
-            ret_mat[i][j].z = (mat[i][j].z != 0) ?
+			ret_mat[i][j].z = (mat[i][j].z != 0) ?
 				(mat[i][j].z + ifdf->z_incr * mat[i][j].z) : (mat[i][j].z);
 			ret_mat[i][j].color = mat[i][j].color;
 			j++;
 		}
 		i++;
 	}
-    return(ret_mat);
+	return (ret_mat);
 }
 
 t_pnt3d			**redim2d(t_pnt3d **mat, t_info *ifdf, t_env *env)
 {
-    t_pnt3d **ret_mat;
-	t_uint32 i = 0;
-    t_uint32 j;
+	t_pnt3d		**ret_mat;
+	t_uint32	i;
+	t_uint32	j;
 
-    i = 0;
+	i = 0;
 	ret_mat = point_alloc_array(ifdf->length, ifdf->width);
-    while (i < env->mat->length)
-    {
-        j = 0;
-        while (j < env->mat->width)
-        {
-            ret_mat[i][j] = (t_pnt3d){
-                mat[i][j].x + ifdf->horiz,
-                mat[i][j].y + ifdf->verti,
-                0,
-                mat[i][j].color
-            };
-            j++;
-        }
-        i++;
-    }
-    return (ret_mat);
+	while (i < env->mat->length)
+	{
+		j = 0;
+		while (j < env->mat->width)
+		{
+			ret_mat[i][j] = (t_pnt3d){
+				mat[i][j].x + ifdf->horiz,
+				mat[i][j].y + ifdf->verti,
+				0,
+				mat[i][j].color
+			};
+			j++;
+		}
+		i++;
+	}
+	return (ret_mat);
 }

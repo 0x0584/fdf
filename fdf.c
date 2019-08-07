@@ -1,11 +1,16 @@
-/*
-    fdf.c
-    created: July, 16 06:51
-*/
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/07/16 06:51:22 by archid-           #+#    #+#             */
+/*   Updated: 2019/08/07 22:04:50 by archid-          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fdf.h"
-
-// void		point_dbg(t_pnt_array pnts);
 
 static void		lstdel_linefree(void *line, size_t size)
 {
@@ -38,7 +43,7 @@ t_fdf_data		*fdf_read(const int fd)
 
 	UNLESS_RET(fd >= 0, NULL);
 	UNLESS_RET(fdf = ALLOC(t_fdf_data *, 1, sizeof(t_fdf_data)), NULL);
-    lst[0] = file_to_lst(fd);
+	lst[0] = file_to_lst(fd);
 	fdf->width = ft_wordcount(lst[0]->content, ' ');
 	fdf->length = ft_lstlen(lst[0]);
 	fdf->base = ALLOC(t_pnt3d **, fdf->length, sizeof(t_pnt3d *));

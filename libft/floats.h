@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*																			  */
-/*														  :::	   ::::::::	  */
-/*	 floats.h											:+:		 :+:	:+:	  */
-/*													  +:+ +:+		  +:+	  */
-/*	 By: archid- <archid-@student.1337.ma>			+#+	 +:+	   +#+		  */
-/*												  +#+#+#+#+#+	+#+			  */
-/*	 Created: 2019/07/02 18:00:10 by archid-		   #+#	  #+#			  */
-/*	 Updated: 2019/07/03 05:42:25 by archid-		  ###	########.fr		  */
-/*																			  */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   floats.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/07/02 18:00:10 by archid-           #+#    #+#             */
+/*   Updated: 2019/08/07 22:07:52 by archid-          ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FLOATS_H
@@ -21,8 +21,6 @@
 
 # define IEEE754_32BIT_BIAS					0x7F
 # define IEEE754_64BIT_BIAS					0x3FF
-
-/* TODO: add long double too */
 
 typedef union u_ieee754_float		t_float32;
 typedef union u_ieee754_double		t_float64;

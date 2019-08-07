@@ -6,14 +6,14 @@
 /*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 20:45:48 by archid-           #+#    #+#             */
-/*   Updated: 2019/08/07 20:46:25 by archid-          ###   ########.fr       */
+/*   Updated: 2019/08/07 21:09:10 by archid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef KEYS_H
 # define KEYS_H
 
-#include <stdbool.h>
+# include <stdbool.h>
 
 typedef enum	e_key_codes
 {

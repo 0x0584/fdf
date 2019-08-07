@@ -6,7 +6,7 @@
 /*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 22:11:53 by archid-           #+#    #+#             */
-/*   Updated: 2019/08/07 17:35:49 by archid-          ###   ########.fr       */
+/*   Updated: 2019/08/07 21:08:57 by archid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct	s_3d_point
 	t_int64 x;
 	t_int64 y;
 	t_int64 z;
-	t_color		color;
+	t_color	color;
 }				t_pnt3d;
 
 t_pnt3d			point_3d_init(t_int64 x, t_int64 y, t_int64 z, t_color color);

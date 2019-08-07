@@ -6,7 +6,7 @@
 /*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 18:47:00 by archid-           #+#    #+#             */
-/*   Updated: 2019/08/07 18:14:18 by archid-          ###   ########.fr       */
+/*   Updated: 2019/08/07 21:07:53 by archid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,25 @@
 # include "point.h"
 # include "libft/libft.h"
 
-#define WIN_WIDTH				1000
-#define WIN_LENGTH				2000
+# define WIN_WIDTH				1000
+# define WIN_LENGTH				2000
 
-#define INIT_SPACING			15
-#define INIT_Z_INCR				0
-#define INIT_HORIZ				650
-#define INIT_VERTI				350
-#define INIT_ANGLE_X			-0.2
-#define INIT_ANGLE_Y			0
-#define INIT_ANGLE_Z			-0.5
-#define INIT_PROJECTION_TYPE	'p'
+# define INIT_SPACING			15
+# define INIT_Z_INCR			0
+# define INIT_HORIZ				650
+# define INIT_VERTI				350
+# define INIT_ANGLE_X			-0.2
+# define INIT_ANGLE_Y			0
+# define INIT_ANGLE_Z			-0.5
+# define INIT_PROJECTION_TYPE	'p'
 
-#define DEF_SPACING				5
-#define DEF_Z_INCR				2
-#define DEF_HORIZ				10
-#define DEF_VERTI				10
-#define DEF_ANGLE_X				0.05
-#define DEF_ANGLE_Y				0.05
-#define DEF_ANGLE_Z				0.05
+# define DEF_SPACING			5
+# define DEF_Z_INCR				2
+# define DEF_HORIZ				10
+# define DEF_VERTI				10
+# define DEF_ANGLE_X			0.05
+# define DEF_ANGLE_Y			0.05
+# define DEF_ANGLE_Z			0.05
 
 typedef struct	s_fdf_data
 {
@@ -62,7 +62,7 @@ typedef struct	s_fdf_info
 	char		proj_type;
 }				t_info;
 
-typedef enum e_rotation_types
+typedef enum	e_rotation_types
 {
 	ROT_X, ROT_Y, ROT_Z
 }				t_rot_type;
