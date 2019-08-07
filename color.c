@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   color.h                                            :+:      :+:    :+:   */
+/*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/07 16:20:08 by archid-           #+#    #+#             */
-/*   Updated: 2019/08/07 20:55:08 by archid-          ###   ########.fr       */
+/*   Created: 2019/08/07 20:47:30 by archid-           #+#    #+#             */
+/*   Updated: 2019/08/07 20:55:29 by archid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COLOR_H
-# define COLOR_H
+#include "color.h"
 
-typedef enum	e_color
+t_color		default_color(int color)
 {
-	FIRE_BRICK = 0xB22222,
-	DIM_GRAY = 0x696969,
-	LIGHT_GRAY = 0xD3D3D3,
-	DARK_GREEN = 0x006400,
-	COLOR_BLUE = 0x0000FF,
-	BLACK = 0x000000,
-	WHITE = 0xFFFFFF
-}				t_color;
+	static t_color default_color = WHITE;
 
-t_color		default_color(int color);
-
-#endif
+	if (color == -1)
+		return (default_color);
+	default_color = color;
+	return (default_color);
+}

@@ -1,39 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   event.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: archid- <archid-@student.1337.ma>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/07 20:46:45 by archid-           #+#    #+#             */
+/*   Updated: 2019/08/07 20:56:57 by archid-          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 #include "draw.h"
 #include "matrice.h"
 #include "event.h"
+#include "keys.h"
 
-int		default_color(int color)
-{
-	static int default_color;
-
-	if (color == -1)
-		return default_color;
-	default_color = color;
-	return default_color;
-}
-
-void	apply_projection(t_info *ifdf, t_env *env, int color)
+static void		apply_projection(t_info *ifdf, t_env *env, int color)
 {
 	t_pnt3d **tab_red;
-	t_pnt3d	**restabloX;
-	t_pnt3d **restabloY;
-	t_pnt3d **restabloZ;
+	t_pnt3d	**rest[3];
 	t_pnt3d **f;
 	t_pnt3d **redf;
 
 	tab_red = redim(env->mat->base, ifdf, env);
-	ft_putendl("before redim");
-	restabloX = rotation(tab_red, ifdf , ROT_X, env);
-	restabloY = rotation(restabloX, ifdf , ROT_Y, env);
-	restabloZ = rotation(restabloY, ifdf , ROT_Z, env);
-	f = projection(restabloZ, ifdf, env);
+	rest[0] = rotation(tab_red, ifdf , ROT_X, env);
+	rest[1] = rotation(rest[0], ifdf , ROT_Y, env);
+	rest[2] = rotation(rest[1], ifdf , ROT_Z, env);
+	f = projection(rest[2], ifdf, env);
 	redf = redim2d(f, ifdf, env);
 	draw_map(env, color, redf);
 	point_free_array(tab_red, env->mat->length);
-	point_free_array(restabloX, env->mat->length);
-	point_free_array(restabloY, env->mat->length);
-	point_free_array(restabloZ, env->mat->length);
+	point_free_array(rest[0], env->mat->length);
+	point_free_array(rest[1], env->mat->length);
+	point_free_array(rest[2], env->mat->length);
 	point_free_array(f, env->mat->length);
 	point_free_array(redf, env->mat->length);
 }
@@ -46,7 +46,7 @@ int key_press(int keycode, void *param)
 	env = param;
 	if (ifdf == NULL)
 	{
-		t_pnt3d pnt = {450, 450, 0, BLACK};
+		t_pnt3d pnt = {780, 480, 0, BLACK};
 		ifdf = get_fdf_info();
 		draw_color_square(env, pnt, 350);
 	}
@@ -91,30 +91,18 @@ int key_press(int keycode, void *param)
 	return(0);
 }
 
-bool			key_is_direc(t_keycode code)
+int		mouse_press(int button, int x, int y, void *param)
 {
-	return (code == KEY_LEFT || code == KEY_RIGHT
-			|| code == KEY_UP || code == KEY_DOWN);
-}
+	t_env *env;
 
-bool			key_is_zoom(t_keycode code)
-{
-	return (code == KEY_ZOOM_UP || code == KEY_ZOOM_DOWN);
-}
-
-bool			key_is_z_incr(t_keycode code)
-{
-	return (code == KEY_Z_INCR || code == KEY_Z_DECR);
-}
-
-bool			key_is_rot(t_keycode code)
-{
-	return (code == KEY_ROT_X_UP || code == KEY_ROT_X_DOWN
-			|| code == KEY_ROT_Y_UP || code == KEY_ROT_Y_DOWN
-			|| code == KEY_ROT_Z_UP || code == KEY_ROT_Z_DOWN);
-}
-
-bool			key_is_proj(t_keycode code)
-{
-	return (code == KEY_PROJ_ISO || code == KEY_PROJ_PARA);
+	env = param;
+	(void)button;
+	if (x >= 70 && x <= 100 && y >= 900 && y <= 930)
+		default_color(FIRE_BRICK);
+	if (x >= 110 && x <= 140 && y >= 900 && y <= 930)
+		default_color(DARK_GREEN);
+	if (x >= 150 && x <= 180 && y >= 900 && y <= 930)
+		default_color(COLOR_BLUE);
+	key_press(-1, param);
+	return (0);
 }
